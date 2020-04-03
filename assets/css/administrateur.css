@@ -1,0 +1,399 @@
+@font-face{
+    font-family: "Gudea";
+    src: url('../font/Gudea-Regular.ttf');
+
+}
+
+@font-face{
+    font-family: 'Gudea Bolt';
+    src: url('../font/Gudea-Bold.ttf');
+}
+
+@font-face{
+    font-family: 'Gudea Italic';
+    src: url('../font/Gudea-Italic.ttf');
+}
+
+body{
+    margin: 0%;
+    padding: 0%;
+    font-family:'Gudea';
+}
+
+/* Partie 1: Haut de page (header et nav barre) */
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2d314e;
+}
+
+header h1{
+    margin-right: 7.5%;
+    font-size: 35px;
+    color: #F7F7F2;
+    font-family: 'Gudea Bolt';
+}
+
+#img-main-page{
+    width: auto;
+    height: 100px;
+}
+
+#btn-logout{
+    background-color: #2d314e;
+    display: flex;
+    margin-right: 2%;
+    align-items: center;
+    width: 120px;
+    height: 50px;
+    color: #F7F7F2;
+    padding: 2.5px;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+
+#btn-logout p{
+    margin-right: 10px;
+    margin-left: 5px;
+    font-size: 19px;
+}
+
+#btn-logout:hover{
+    cursor:pointer;
+    background-color: #2d314e;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+}
+
+/* Bouton classe et planning */
+nav{
+    width: 20%;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 1.1%;
+    margin-bottom: -2%;
+    margin-top: 5%;
+}
+
+nav > div{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+#classroom-section-title{
+    height: 50px;
+    background-color: #2d314e;
+    color: #eb2a5c;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#classroom-section-title:hover{
+    cursor:pointer;
+    background-color: #2d314e;
+    color: #F7F7F2;
+    transition-duration: 0.5s;
+}
+
+
+#planning-section-title{
+    background-color: #2d314e;
+    color: #eb2a5c;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#planning-section-title:hover{
+    cursor:pointer;
+    background-color: #2d314e;
+    color: #F7F7F2;
+    transition-duration: 0.5s;
+}
+
+nav > div > h3{
+    display: flex;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-size: 1.4em;
+}
+
+nav > div > h3 > svg{
+    margin-right: 10%;
+}
+
+
+
+/* Partie 2: Section centrale (tableau classe et planning) */
+/* Tableau centrale (style commun aux deux tableaux) */
+table{
+    width: 98%;
+    margin: 2% auto 2% auto;
+    border-collapse: collapse;
+    background-color: #2d314e;
+    color: #eb2a5c;
+}
+
+tr{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    font-size: 1.6em;
+    color: #F7F7F2;
+    width: 100%;
+}
+
+td, th{
+    width: 100%;
+}
+
+th{
+    color: #eb2a5c;
+    font-family: 'Gudea Italic';
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+.modif_form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modif_form > select
+{
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+.modif_form > input
+{
+    width: 50%;
+    margin-bottom: 2%;
+}
+
+.modif_form > button
+{
+    margin-bottom: 10%;
+}
+
+
+
+
+/* Partie 3: Section de bas de page: (Formulaire choix de classe et ajout d'utilisateur) */
+#bottom-section
+{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5%;
+}
+
+
+/* Liste de selection des classe (menu deroulant) */
+.dropdown-container 
+{
+    height:100%;
+    width:100%;
+}
+
+.dropdown 
+{
+    width: 100%;
+    margin-left: 5%;
+    z-index:1;
+    position:relative;
+    display: inline-block;
+}
+
+.dropdown-title
+{
+    display: flex;
+    justify-content: space-between;
+    padding:10px;
+    background:white;
+    position:relative;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+
+.dropdown input:after 
+{
+    content:"";
+    width:100%;
+    height:2px;
+    position:absolute;
+    display:block;
+    background:#C63D0F;
+    bottom:0;
+    left:0;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition-duration: 0.2s;
+    -webkit-transform: scaleX(0);
+    -webkit-transform-origin: bottom left;
+    -webkit-transition-duration: 0.2s;
+}
+
+.dropdown input 
+{
+    top:0;
+    opacity:0;
+    display:block;
+    padding:0;
+    margin:0;
+    border:0;
+    position:absolute;
+    height:100%;
+    width:100%;
+}
+
+.dropdown input:hover 
+{
+    cursor:pointer;
+}
+.dropdown input:hover ~ .dropdown-title 
+{
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+}
+
+.dropdown input:checked:after 
+{
+    transform: scaleX(1);
+    -webkit-transform: scaleX(1);
+}
+
+.dropdown input:checked ~ .dropdown-list-container
+{
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+}
+
+.dropdown-title span 
+{
+    color:#C63D0F;
+}
+
+.dropdown-list-container
+{
+    width: 99.5%;
+    display:block;
+    position: absolute;
+    background:white;
+    height:auto;
+    transform: scaleY(0);
+    transform-origin: top left;
+    transition-duration: 0.2s;
+    -webkit-transform: scaleY(0);
+    -webkit-transform-origin: top left;
+    -webkit-transition-duration: 0.2s;
+}
+
+.dropdown-list-container ul 
+{
+    margin:0;
+    padding:0;
+    list-style-type: none;
+}
+
+.dropdown-list-container li 
+{
+    text-align: justify;
+    margin-bottom:5px;
+    word-break: keep-all;
+    white-space:nowrap;
+    display:block;
+    position:relative;
+}
+
+.list-item-container
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.list-item-container > .list-item-title 
+{
+    width: 80%;
+    position:relative;
+    -webkit-transition-duration: 0.2s;
+    transition-duration: 0.2s;
+    padding:5px;
+    background:white;
+    color:#C63D0F;
+}
+
+.list-item-container > .list-item-title:hover:before 
+{
+    transform:scaleX(1);
+    -webkit-transform:scaleX(1);
+}
+
+.list-item-container > .list-item-title:hover 
+{
+    color:white;
+    background:#C63D0F;
+    transition-duration: 0.5s;
+}
+
+.list-item-logo > svg:hover
+{
+    background: #C63D0F;
+    transition-duration: 0.5s;
+}
+
+
+/* Formulaire pour ajouter une classe */
+#new-class-form
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 105%;
+
+    margin-left: 5%;
+    margin-top: -125%;
+}
+
+#new-class-form > svg, #user-form-container > svg
+{
+    color: green;
+}
+
+
+/* Formulaire pour ajouter un utilisateur */
+#user-form-container
+{
+    width: 30%;
+    margin-right: 1%;
+    text-align: center;
+}
+
+#user-form-container > h3 > svg
+{
+    margin-right: 2%;
+    color: green;
+}
+
+#new-user-form
+{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+#new-user-form > button
+{
+    width: 50%;
+    margin: 15% auto 5% auto;
+}
