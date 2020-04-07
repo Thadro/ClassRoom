@@ -258,13 +258,12 @@ function onModifUser(event)
     $('#modif-form-target').removeAttr('id');
 }
 
-/* When the user clicks on the button,
-toggle between hiding and showing the dropdown content */
-function myFunction() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
+  //Affichage du formulaire d'ajout d'utilisateur
+    function dropDownFunction() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
   
-  // Close the dropdown menu if the user clicks outside of it
+  // Fermer le dropdown
   window.onclick = function(event) {
     if (!event.target.matches('.dropbtn')) {
       let dropdowns = document.getElementsByClassName("dropdown-content");
