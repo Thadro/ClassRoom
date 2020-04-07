@@ -16,37 +16,55 @@ const database = firebase.database();
 
 
 
-//Partie 1: Selection de la classe
-let class_Selected = "FIDEV2";
-showUser(class_Selected);
 
-//Gestionnaire d'évenement 1: Envoie de la classe selectionné
-$('#item-1').click(() => { 
-    class_Selected = $('#item-1').text();
-    $('#class-title').empty();
-    $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>' +class_Selected);
-    showUser(class_Selected);
-});
+//Partie 1: Initialisation de l'interface, fonction d'affichage des données
+let class_Selected = "";
 
-$('#item-2').click(() => { 
-    class_Selected = $('#item-2').text();
-    $('#class-title').empty();
-    $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>' +class_Selected);
-    showUser(class_Selected);
-});
+//Montrer la liste des classe
+database.ref('class/').on('value', function(snapshot) 
+{
+    $('#dropdown-list').empty();
 
-$('#item-3').click(() => { 
-    class_Selected = $('#item-3').text();
-    $('#class-title').empty();
-    $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>' +class_Selected);
-    showUser(class_Selected);
-});
+    let content = '';
+
+    snapshot.forEach(function(item){
+        const user = item.val();
+        content += `<li>
+                        <div class="list-item-container">
+                            <div class="list-item-title">${user.class_Name}</div>
+                            <div class="list-item-logo">
+                                <button class="modif-class-button"><i class="fas fa-pencil-alt"></i></button>
+                                <button class="delete-class-button" id=${user.class_Name}><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                    </li>`
+    })
+
+    $('#dropdown-list').append(content);
+
+    //Selection manuel de la classe (click sur le dropdown)
+    setTimeout(() => {
+        $('.list-item-title').click(function(){
+            class_Selected = $(this).text();
+
+            $('#class-title').empty();
+            $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>' +class_Selected);
+
+            showUser(class_Selected);
+        });
+
+        $('.delete-class-button').click(function(){
+            $(this).attr('class', 'delete-class-button-target');
+            onDeleteClass();
+        })
+    }, 500);
+})
 
 
 //Fonction 1: Permet de montrer les utilisateurs en fonction de la classe
 function showUser(class_Selected)
 {
-    database.ref('users/' +class_Selected).on('value', function (snapshot) {
+    database.ref('class/' +class_Selected+ '/student-list').on('value', function(snapshot) {
 
         $('#users').empty();   
         
@@ -54,10 +72,12 @@ function showUser(class_Selected)
 
         snapshot.forEach(function(item) {
 
-            const user = item.val()
+            const user = item.val();
+
+            //Afin d'éviter que la boucle affiche 'undefined' en lisant l'entrée class_Name
             content += `<tr>
                             <td>
-                                <form class="delete_form">
+                                <form class="delete-form">
                                     <input type="hidden" value=${user.user_Id}  />
                                     <button type="submit"><i class="fas fa-times"></i></button>
                                     ${user.nom}
@@ -66,7 +86,7 @@ function showUser(class_Selected)
                             <td>${user.tel}</td>
                             <td>${user.sexe}</td>
                             <td>
-                                <form class="modif_form">
+                                <form class="modif-form">
                                     <select>
                                         <option value="nom">Nom et prénom</option>
                                         <option value="tel">Telephone</option>
@@ -85,16 +105,16 @@ function showUser(class_Selected)
         //Gestionnaire d'évenement pour la suppression et la modification.
         //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery
         setTimeout(() => {
-            $('.delete_form').click(function(){
-                $('#delete_form_target').removeAttr('id');
-                $(this).attr('id', 'delete_form_target');
-                setTimeout(() => $('#delete_form_target').on('submit', onDeleteUser), 500);
+            $('.delete-form').click(function(){
+                $('#delete-form-target').removeAttr('id');
+                $(this).attr('id', 'delete-form-target');
+                setTimeout(() => $('#delete-form-target').on('submit', onDeleteUser), 500);
             });
 
-            $('.modif_form').click(function(){
-                $('#modif_form_target').removeAttr('id');
-                $(this).attr('id', 'modif_form_target');
-                setTimeout(() => $('#modif_form_target').on('submit', onModifUser), 500);
+            $('.modif-form').click(function(){
+                $('#modif-form-target').removeAttr('id');
+                $(this).attr('id', 'modif-form-target');
+                setTimeout(() => $('#modif-form-target').on('submit', onModifUser), 500);
             });
   
         }, 500);
@@ -104,74 +124,159 @@ function showUser(class_Selected)
 
 
 
-//Partie 2: Gestion de la création de classe et d'utilisateurs
-// Gestionnaire d'evenement 2: Envoie des infos utilisateurs
-$('#new-user-form').on('submit', onAddUser);
+//Gestion des information de classe et d'élève
 
-//Fonction 2: Permet de rajouter un utilisateur dans la base de donnée
-function onAddUser (event)
+//Partie 2: Gestion des classes
+//Fonction 2: Permet d'ajouter une nouvelle classe dans la base de donnée
+$('#new-class-form').on('submit', onAddClass);
+
+function onAddClass(event)
 {
     event.preventDefault();
 
+    let new_Class = $('#class').val();
+
+    database.ref('class/' +new_Class).set({class_Name: new_Class});
+}
+
+//Fonction 3: Permet de supprimer une classe de la base de donnée
+$('#delete-class').click(onDeleteClass);
+
+function onDeleteClass()
+{
+    class_Target = $('.delete-class-button-target').attr('id');
+
+    database.ref('class/' +class_Target).set(null);
+    
+    //Si on supprime la classe affichée, on réactualise le titre du boutton ainsi que l'affichage du tableau
+    if(class_Selected == class_Target)
+    {
+        class_Selected = "";
+        $('#class-title').empty();
+        $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>Classe');
+    }
+}
+
+
+
+
+//Partie 3: Gestion des élèves
+//Fonction 3: Permet de rajouter un utilisateur dans la base de donnée
+$('#new-user-form').on('submit', onAddUser);
+
+function onAddUser(event)
+{
+    event.preventDefault();
+
+    //On efface les messages d'erreurs à chaque nouvelle envoie de formulaire
+    $('#error-title1').css('display', 'none');
+    $('#error-title2').css('display', 'none');
+    $('#error-title3').css('display', 'none');
+
+    //Data student
     let user_Id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     let nom = $('#nom').val();
     let tel = $('#tel').val();
     let sexe = $("input[name='sexe']:checked").val();
 
-    let data = {
+    //Data user
+    let pseudo = $('#pseudo').val();
+    let password = $('#password').val();
+    let passwordConfirm = $('#password_confirm').val();
+
+    // Gestion des cas d'erreurs
+    if(class_Selected == "")
+    {
+        $('#error-title1').css('display', 'block');
+        return;
+    }
+
+    //1 champs non remplis
+    if(nom == "" || tel == "" || sexe == "" || pseudo == "" || password == "" || passwordConfirm == "")
+    {
+        $('#error-title2').css('display', 'block');
+        return;
+    }
+
+    //2 Erreur de mots de passe
+    if(password != passwordConfirm)
+    {
+        $('#error-title3').css('display', 'block');
+        return;
+    }
+
+    //Data student: contient les informations de l'élève
+    let data_Student = {
         nom : nom,
         tel : tel,
         sexe : sexe,
         user_Id: user_Id
     };
 
-    database.ref('users/' +class_Selected+ '/' +user_Id).set(data);
+    //Data user: contient les informations de l'utilisateur
+    let data_User = {
+        pseudo: pseudo,
+        password: password,
+        user_Type: "élève",
+        user_Id: user_Id
+    }
+
+    //On créer deux liste dans la base de données:
+
+    //Liste des élèves affiché dans le tableau
+    database.ref('class/' +class_Selected+ '/student-list/' +user_Id).set(data_Student);
+
+    //Liste des utilisateurs utilisé pour l'autentification
+    database.ref('user-list/' +user_Id).set(data_User);
 }
 
-
-//Fonction 3: Permet d'ajouter une nouvelle classe dans la base de donnée
-$('#new-class-form').on('submit', onAddClass);
-
-function onAddClass (event)
-{
-    event.preventDefault();
-
-    let new_Class = $('#class').val();
-
-    database.ref('users/').push(new_Class);
-}
-
-
-
-
-//Partie 4: Modification des donnée utilisateur
 
 //Fonction 4: Permet de supprimer un utilisateur de la base de donnée
-function onDeleteUser   (event)
+function onDeleteUser(event)
 {
     event.preventDefault();
 
-    let user_Selected = $('#delete_form_target > input[type="hidden"]').val();
+    let user_Selected = $('#delete-form-target > input[type="hidden"]').val();
 
-    database.ref('users/' +class_Selected+ '/' +user_Selected).set(null);
-
+    database.ref('class/' +class_Selected+ '/student-list/' +user_Selected).set(null);
+    database.ref('user-list/' +user_Selected).set(null);
 }
+
 
 //Fonction 5: Permet de modifier les information d'un utilisateur dans la base de donnée
-function onModifUser (event)
+function onModifUser(event)
 {
     event.preventDefault();
 
-    let attribute = $('#modif_form_target > select').val();
-    let new_Value = $('#modif_form_target > input[type="text"]').val();
-    let user_Selected = $('#modif_form_target > input[type="hidden"]').val();
+    let attribute = $('#modif-form-target > select').val();
+    let new_Value = $('#modif-form-target > input[type="text"]').val();
+    let user_Selected = $('#modif-form-target > input[type="hidden"]').val();
 
-    database.ref('users/' +class_Selected+ '/' +user_Selected+ '/' +attribute).set(new_Value);
+    database.ref('class/' +class_Selected+ '/student-list/' +user_Selected+ '/' +attribute).set(new_Value);
 
     //On enleve l'id au formulaire pour éviter de marquer plusieurs formulaire avec le meme id
-    $('#modif_form_target').removeAttr('id');
+    $('#modif-form-target').removeAttr('id');
 }
 
+/* When the user clicks on the button,
+toggle between hiding and showing the dropdown content */
+function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+  
+  // Close the dropdown menu if the user clicks outside of it
+  window.onclick = function(event) {
+    if (!event.target.matches('.dropbtn')) {
+      let dropdowns = document.getElementsByClassName("dropdown-content");
+      let i;
+      for (i = 0; i < dropdowns.length; i++) {
+        let openDropdown = dropdowns[i];
+        if (getElementById('#register-student').click()) {
+           document.getElementsByClassName('dropdown-content') = openDropdown.classList.remove('show');
+        }
+      }
+    }
+  }
 
 
 
@@ -191,4 +296,48 @@ $('#planning-section-title').click(function(){
     $('#planning-section-title').css("height", "50px");
     $('#classroom-section').css("display", "none");
     $('#planning-section').css("display", "block");
+})
+
+//Coloration bouton
+
+$('#btn-logout').mouseenter(function(){
+    $('#btn-logout > a').css({
+        'color' : '#eb2a5c',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('#btn-logout').mouseleave(function(){
+    $('#btn-logout > a').css({
+        'color' : '#F7F7F2',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('#register-student').mouseenter(function(){
+    $('#register-student > p').css({
+        'color' : '#eb2a5c',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('#register-student').mouseleave(function(){
+    $('#register-student > p').css({
+        'color' : '#F7F7F2',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('.dropbtn').mouseenter(function(){
+    $('.dropbtn > p').css({
+        'color' : '#eb2a5c',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('.dropbtn').mouseleave(function(){
+    $('.dropbtn > p').css({
+        'color' : '#F7F7F2',
+        transitionDuration: '0.5s'
+    })
 })

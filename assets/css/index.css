@@ -46,6 +46,14 @@ h1{
     font-family: 'Gudea Bolt';
 }
 
+form
+{
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 #sign-in-to-chat{
     background-color: #eb2a5c;
     width: 120px;
@@ -58,8 +66,9 @@ h1{
     margin-bottom: 15px;
 }
 
-#sign-in-to-chat > a{
+#sign-in-to-chat > p{
     text-decoration: none;
+    margin: 0;
     color: #F7F7F2;
 }
 

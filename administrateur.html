@@ -11,7 +11,7 @@
     <header>
         <img src="assets/img/Ecole-Multimedia.jpg" alt="logo-ecole" id="img-main-page"  />
         <h1>Espace administrateur</h1>
-        <button id="btn-logout"><p>Déconnexion</p><i class="fas fa-power-off"></i></button>
+        <button id="btn-logout"><a href="index.html">Déconnexion</a><i class="fas fa-power-off"></i></button>
     </header>
 
     <nav>
@@ -77,7 +77,7 @@
                         </div>
                     </div>
                 </div>
-
+          
                 <form id="new-class-form">
                     <i class="fas fa-plus"></i>
                     <div>
@@ -87,24 +87,45 @@
                 </form>
             </div>
 
-            <div id="user-form-container">
-                <h3><i class="fas fa-user-plus"></i>Ajouter un utilisateur</h3>
-                <form id="new-user-form">
-                    <h3>nom</h3>
-                    <input type="text" id="nom" />
-
-                    <h3>telephone</h3>
-                    <input type="text" id="tel" />
-
-                    <h3>sexe</h3>
-                    <div id="radio-container">
-                        <input type="radio" name="sexe" value="Homme" id="Homme" checked/><label for="Homme">Homme</label>
-                        <input type="radio" name="sexe" value="Femme" id="Femme" /><label for="Femme">Femme</label>
+            <div class="dropdown-user">
+                <button onclick="myFunction()" class="dropbtn"><p>Ajouter un élève</p></button>
+                <div id="myDropdown" class="dropdown-content">
+                    <div id="user-form-container">
+        
+                        <h4 id="error-title1">Avant d'ajouter un utilisateur, vous devez d'abord selectionner une classe !</h4>
+                        <h4 id="error-title2">L'integralité des champs doit etre remplis, veuillez recommencer !</h4>
+                        <h4 id="error-title3">Les champs de mots de passe ne sont pas identique, veuillez recommencer !</h4>
+        
+                        <form id="new-user-form">
+                            <h3>Information personnel</h3>
+                            <h4>Nom</h4>
+                            <input type="text" id="nom" />
+        
+                            <h4>Telephone</h4>
+                            <input type="text" id="tel" />
+        
+                            <h4>Sexe</h4>
+                            <div id="radio-container">
+                                <input type="radio" name="sexe" value="Homme" id="Homme" checked/><label for="Homme">Homme</label>
+                                <input type="radio" name="sexe" value="Femme" id="Femme" /><label for="Femme">Femme</label>
+                            </div>
+        
+                            <h3>Identifiant de connexion</h3>
+                            <h4>Pseudo</h4>
+                            <input type="text" id="pseudo" />
+        
+                            <h4>Mots de passe</h4>
+                            <input type="password" id="password" />
+        
+                            <h4>Confirmation du mots de passe</h4>
+                            <input type="password" id="password_confirm" />
+        
+                            <button type="submit" id="register-student"><p>Enregistrer</p></button>
+                        </form>
                     </div>
-
-                    <button type="submit">Enregistrer</button>
-                </form>
-            </div>
+                </div>
+        </div>
+        
         </section>
     </div>
 
