@@ -262,22 +262,6 @@ function onModifUser(event)
     function dropDownFunction() {
         document.getElementById("myDropdown").classList.toggle("show");
     }
-  
-  // Fermer le dropdown
-  window.onclick = function(event) {
-    if (!event.target.matches('.dropbtn')) {
-      let dropdowns = document.getElementsByClassName("dropdown-content");
-      let i;
-      for (i = 0; i < dropdowns.length; i++) {
-        let openDropdown = dropdowns[i];
-        if (getElementById('#register-student').click()) {
-           document.getElementsByClassName('dropdown-content') = openDropdown.classList.remove('show');
-        }
-      }
-    }
-  }
-
-
 
 //Partie 5: Gestion router
 
