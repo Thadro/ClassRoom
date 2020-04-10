@@ -15,7 +15,7 @@
     </header>
 
     <nav>
-        <div id="classroom-section-title"><h3 id="class-title"><i class="fas fa-chalkboard-teacher"></i> FIDEV2</h3></div>
+        <div id="classroom-section-title"><h3 id='class-title'><i class="fas fa-chalkboard-teacher"></i>Classe</h3></div>
         <div id="planning-section-title"><h3><i class="fas fa-calendar-week"></i>Planning</h3></div>
     </nav>
 
@@ -85,6 +85,8 @@
                         <button type="submit">Enregistrer</button>
                     </div>
                 </form>
+                <h4 id="form-class-error">Veuillez remplir le champs obligatoire</h4>
+                <h4 id="form-class-error2">Veuillez ne pas mettre d'espace</h4>
             </div>
 
             <div class="dropdown-user">
@@ -97,7 +99,7 @@
                         <h4 id="error-title3">Les champs de mots de passe ne sont pas identique, veuillez recommencer !</h4>
         
                         <form id="new-user-form">
-                            <h3>Information personnel</h3>
+                            <h3>Information personnelle</h3>
                             <h4>Nom</h4>
                             <input type="text" id="nom" />
         
@@ -130,7 +132,7 @@
     </div>
 
     <div id="planning-section" style="display: none">
-        <table id="planning-table">
+        <table>
             <thead>
                 <tr>
                     <th>&nbsp;</th>
@@ -144,99 +146,140 @@
 
             <tbody>
                 <tr>
-                    <th>9H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>9H</td>
+                    <td class="23-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="24-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="25-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="26-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="27-03-20-morning tab-cell-hour">&nbsp;</td>
                 </tr>
 
                 <tr>
-                    <th>10H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>10H</td>
+                    <td class="23-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="24-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="25-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="26-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="27-03-20-morning tab-cell-hour">&nbsp;</td>
                 </tr>
 
                 <tr>
-                    <th>11H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>11H</td>
+                    <td class="23-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="24-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="25-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="26-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="27-03-20-morning tab-cell-hour">&nbsp;</td>
                 </tr>
 
                 <tr>
-                    <th>12H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>12H</td>
+                    <td class="23-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="24-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="25-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="26-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="27-03-20-morning tab-cell-hour">&nbsp;</td>
                 </tr>
 
                 <tr>
-                    <th>13H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>13H</td>
+                    <td class="23-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="24-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="25-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="26-03-20-morning tab-cell-hour">&nbsp;</td>
+                    <td class="27-03-20-morning tab-cell-hour">&nbsp;</td>
                 </tr>
 
                 <tr>
-                    <th>14H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>14H</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
                 </tr>
 
                 <tr>
-                    <th>15H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>15H</td>
+                    <td class="23-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="24-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="25-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="26-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="27-03-20-afternoon tab-cell-hour">&nbsp;</td>
                 </tr>
 
                 <tr>
-                    <th>16H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>16H</td>
+                    <td class="23-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="24-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="25-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="26-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="27-03-20-afternoon tab-cell-hour">&nbsp;</td>
                 </tr>
 
                 <tr>
-                    <th>17H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
+                    <td>17H</td>
+                    <td class="23-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="24-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="25-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="26-03-20-afternoon tab-cell-hour">&nbsp;</td>
+                    <td class="27-03-20-afternoon tab-cell-hour">&nbsp;</td>
                 </tr>
 
-                <tr>
-                    <th>18H</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                    <th>&nbsp;</th>
-                </tr>
             </tbody>
         </table>
-    </div>
 
-    <button id="delete">Delete</button>
+        <section id="planning-bottom-section">
+            <div id="planning-class-section">
+                <div class="planning-dropdown-container">
+                    <div class="planning-dropdown">
+                        <div class="planning-dropdown-title"><span>Liste des classes</span><i class="fas fa-sort-down"></i></div>
+                        <input type="checkbox">
+                        <div class="planning-dropdown-list-container">
+                            <ul id="planning-dropdown-list">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <form id="planning-new-class-form">
+                    <i class="fas fa-plus"></i>
+                    <div>
+                        <input type="text" placeholder="Nouvelle classe" id="planning-Class"/>
+                        <button type="submit">Enregistrer</button>
+                    </div>
+                </form>
+            </div>
+
+            <form id="classroom-form">
+                <h3>Ajouter un cour</h3>
+                <h3>Nom du cour</h3>
+                <input type="text" id="classroom-name"  />
+
+                <h3>Professeur</h3>
+                <input type="text" id="teacher-name"  />
+
+                <h3>Date</h3>
+                <select id="date-selected">
+                    <option value="23-03-20">23/03/20</option>
+                    <option value="24-03-20">24/03/20</option>
+                    <option value="25-03-20">25/03/20</option>
+                    <option value="26-03-20">26/03/20</option>
+                    <option value="27-03-20">27/03/20</option>
+                </select>
+
+                <h3>Plage horraire</h3>
+                <select id="hour-select">
+                    <option value="morning">Matin</option>
+                    <option value="afternoon">Après-midi</option>
+                    <option value="day">Journée entière</option>
+                </select>
+
+                <button type="submit">Enregistrer</button>
+            </form>
+        </section>
+    </div>
 
     <script src="assets/lib/all.min.js"></script>
     <script src="assets/lib/jquery-1.11.2.min.js"></script>

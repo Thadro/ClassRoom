@@ -1,0 +1,193 @@
+@font-face{
+    font-family: "Gudea";
+    src: url('../font/Gudea-Regular.ttf');
+
+}
+
+@font-face{
+    font-family: 'Gudea Bolt';
+    src: url('../font/Gudea-Bold.ttf');
+}
+
+@font-face{
+    font-family: 'Gudea Italic';
+    src: url('../font/Gudea-Italic.ttf');
+}
+
+body{
+    margin: 0%;
+    padding: 0%;
+    font-family:'Gudea';
+}
+
+/* Partie 1: Haut de page (header et nav barre) */
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2d314e;
+}
+
+header h1{
+    margin-right: 7.5%;
+    font-size: 35px;
+    color: #F7F7F2;
+    font-family: 'Gudea Bolt';
+}
+
+#img-main-page{
+    width: auto;
+    height: 100px;
+}
+
+#btn-logout{
+    background-color: #2d314e;
+    display: flex;
+    margin-right: 2%;
+    align-items: center;
+    width: 120px;
+    height: 50px;
+    color: #F7F7F2;
+    padding: 2.5px;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+
+#btn-logout a{
+    margin-right: 10px;
+    margin-left: 5px;
+    font-size: 19px;
+    text-decoration: none;
+    color: #F7F7F2;
+}
+
+#btn-logout:hover{
+    cursor:pointer;
+    background-color: #2d314e;
+    color: #eb2a5c;
+    transition-duration: 0.8s;
+}
+
+/* Bouton classe et planning */
+nav{
+    width: 20%;
+    display: flex;
+    align-items: flex-end;
+    margin-left: 1.1%;
+    margin-bottom: -2%;
+    margin-top: 5%;
+}
+
+nav > div{
+    padding-left: 10%;
+    padding-right: 10%;
+}
+
+#planning-section-title{
+    background-color: #2d314e;
+    color: #eb2a5c;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+#planning-section-title:hover{
+    cursor:pointer;
+    background-color: #2d314e;
+    color: #F7F7F2;
+    transition-duration: 0.5s;
+}
+
+nav > div > h3{
+    display: flex;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    font-size: 1.4em;
+}
+
+nav > div > h3 > svg{
+    margin-right: 10%;
+}
+
+
+
+/* Partie 2: Section centrale (tableau classe et planning) */
+/* Tableau centrale (style commun aux deux tableaux) */
+table{
+    width: 98%;
+    margin: 2% auto 2% auto;
+    border-collapse: collapse;
+    background-color: #2d314e;
+    color: #eb2a5c;
+}
+
+tr{
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    font-size: 1.6em;
+    color: #F7F7F2;
+    width: 100%;
+}
+
+td, th{
+    width: 100%;
+}
+
+th{
+    color: #eb2a5c;
+    font-family: 'Gudea Italic';
+    margin-top: 2%;
+    margin-bottom: 5%;
+}
+
+.modif-form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modif-form > select
+{
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+.modif-form > input
+{
+    width: 50%;
+    margin-bottom: 2%;
+}
+
+.modif-form > button
+{
+    margin-bottom: 10%;
+}
+
+.modif_form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.modif_form > select
+{
+    width: 50%;
+    margin-top: 2%;
+    margin-bottom: 3%;
+}
+
+.modif_form > input
+{
+    width: 50%;
+    margin-bottom: 2%;
+}
+
+.modif_form > button
+{
+    margin-bottom: 10%;
+}

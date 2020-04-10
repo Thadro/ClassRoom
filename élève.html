@@ -1,12 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Ecole Multimedia</title>
+    <title>Ecole Multimédia</title>
+    <link rel="stylesheet" href="assets/css/élève.css">
 </head>
 <body>
-    <h1>Bonjour vous etes un élève</h1>
+    <header>
+        <img src="assets/img/Ecole-Multimedia.jpg" alt="logo-ecole" id="img-main-page"  />
+        <h1>Espace Élève</h1>
+        <button id="btn-logout"><a href="index.html">Déconnexion</a><i class="fas fa-power-off"></i></button>
+    </header>
+
+    <nav>
+        <div id="planning-section-title"><h3><i class="fas fa-calendar-week"></i>Planning</h3></div>
+    </nav>
+
+    <div id="planning-section">
+        <table id="planning-table">
+            <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>23/03/20</th>
+                    <th>24/03/20</th>
+                    <th>25/03/20</th>
+                    <th>26/03/20</th>
+                    <th>27/03/20</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <th>9H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>10H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>11H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>12H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>13H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>14H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>15H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>16H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>17H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+
+                <tr>
+                    <th>18H</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                    <th>&nbsp;</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="assets/lib/all.min.js"></script>
+    <script src="assets/lib/jquery-1.11.2.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.12.0/firebase-database.js"></script>
+    <script src="assets/js/élève.js"></script>
 </body>
 </html>

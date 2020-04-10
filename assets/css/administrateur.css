@@ -71,6 +71,7 @@ header h1{
 }
 
 /* Bouton classe et planning */
+
 nav{
     width: 20%;
     display: flex;
@@ -149,13 +150,18 @@ tr{
 
 td, th{
     width: 100%;
+    border: 1px solid black;
 }
 
 th{
     color: #eb2a5c;
     font-family: 'Gudea Italic';
-    margin-top: 2%;
-    margin-bottom: 5%;
+    padding: 1%;
+}
+
+td{
+    padding-top: 3%;
+    padding-bottom: 10px;
 }
 
 .modif-form
@@ -215,7 +221,7 @@ th{
 #bottom-section
 {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin-bottom: 5%;
 }
 
@@ -384,9 +390,7 @@ th{
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     width: 105%;
-
     margin-left: 5%;
 }
 
@@ -395,6 +399,10 @@ th{
     color: green;
 }
 
+#form-class-error, #form-class-error2{
+    color: red;
+    display: none;
+}
 
 /* Second dropdown */
 /* Dropdown Button */
@@ -424,12 +432,6 @@ th{
     background-color: #2d314e;
     transition-duration: 0.5s;
     cursor: pointer;
-}
-
-/* The container <div> - needed to position the dropdown content */
-.dropdown-user 
-{
-    margin-right: 40%;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -599,4 +601,192 @@ h4[id*="error-title"]
     background-color: #2d314e;
     transition-duration: 0.5s;
     cursor: pointer;
+}
+
+/* Section planning */
+#planning-bottom-section
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.planning-dropdown-container
+{
+    height: 10%;
+    width: 100%;
+}
+
+.planning-dropdown 
+{
+    width: 100%;
+    margin-left: 5%;
+    z-index:1;
+    position:relative;
+    display: inline-block;
+}
+
+.planning-dropdown input:after 
+{
+    content:"";
+    width:100%;
+    height:2px;
+    position:absolute;
+    display:block;
+    background:#C63D0F;
+    bottom:0;
+    left:0;
+    transform: scaleX(0);
+    transform-origin: bottom left;
+    transition-duration: 0.2s;
+    -webkit-transform: scaleX(0);
+    -webkit-transform-origin: bottom left;
+    -webkit-transition-duration: 0.2s;
+}
+
+.planning-dropdown input 
+{
+    top:0;
+    opacity:0;
+    display:block;
+    padding:0;
+    margin:0;
+    border:0;
+    position:absolute;
+    height:100%;
+    width:100%;
+}
+
+.planning-dropdown input:hover 
+{
+    cursor:pointer;
+}
+
+.planning-dropdown input:hover ~ .planning-dropdown-title
+{
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+}
+
+.planning-dropdown input:checked:after 
+{
+    transform: scaleX(1);
+    -webkit-transform: scaleX(1);
+}
+
+.planning-dropdown input:checked ~ .planning-dropdown-list-container
+{
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+}
+
+.planning-dropdown-title span 
+{
+    color:#C63D0F;
+}
+
+.planning-dropdown-title
+{
+    display: flex;
+    justify-content: space-between;
+    padding:10px;
+    background:white;
+    position:relative;
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.75);
+    transition-duration: 0.2s;
+    -webkit-transition-duration: 0.2s;
+}
+.planning-dropdown input:hover ~ .planning-dropdown-title 
+{
+    -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75);
+}
+
+.planning-dropdown-title span 
+{
+    color:#C63D0F;
+}
+
+.planning-dropdown-list-container
+{
+    width: 99.5%;
+    display:block;
+    position: absolute;
+    background:white;
+    height:auto;
+    transform: scaleY(0);
+    transform-origin: top left;
+    transition-duration: 0.2s;
+    -webkit-transform: scaleY(0);
+    -webkit-transform-origin: top left;
+    -webkit-transition-duration: 0.2s;
+}
+
+.planning-dropdown-list-container ul 
+{
+    margin:0;
+    padding:0;
+    list-style-type: none;
+}
+
+.planning-dropdown-list-container li 
+{
+    text-align: justify;
+    margin-bottom:5px;
+    word-break: keep-all;
+    white-space:nowrap;
+    display:block;
+    position:relative;
+}
+
+.planning-list-item-container
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+/* Formulaire pour ajouter une classe */
+#planning-new-class-form
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    width: 105%;
+
+    margin-left: 5%;
+}
+
+#planning-new-class-form > svg
+{
+    color: green;
+}
+
+/* Fomulaire pour ajouter un cour sur l'emplois du temps */
+#classroom-form
+{
+    width: 15%;
+    margin-right: 1%;
+    margin-bottom: 10%;
+    text-align: center;
+    border: 1px solid black;
+}
+
+#classroom-form > button
+{
+    display: block;
+    margin-top: 10%;
+    margin-left: 30%;
+}
+
+.classroom-title
+{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
 }

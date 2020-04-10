@@ -46,6 +46,12 @@ h1{
     font-family: 'Gudea Bolt';
 }
 
+#error-title
+{
+    color: red;
+    display: none;
+}
+
 form
 {
     width: 75%;
@@ -66,9 +72,8 @@ form
     margin-bottom: 15px;
 }
 
-#sign-in-to-chat > p{
+#sign-in-to-chat > h4{
     text-decoration: none;
-    margin: 0;
     color: #F7F7F2;
 }
 
@@ -78,6 +83,10 @@ form
     border: none;
     outline: none;
     border-radius: 3px;
+}
+
+#sign-in-to-chat > p {
+    margin: 0;
 }
 
 #sign-in-mdp{
