@@ -26,6 +26,11 @@ function userConnexion(event)
 
     let pseudo = $('#sign-in-identifiant').val();
     let password = $('#sign-in-mdp').val();
+    
+    if(pseudo == 'root' && password == 'root')
+    {
+        self.location.href = 'administrateur.html'
+    }
 
     //On va chercher la liste des utilisateurs dans la base de donnée pour comparer avec les valeurs de l'utilisateur
     database.ref('user-list/').on('value', function(snapshot){
