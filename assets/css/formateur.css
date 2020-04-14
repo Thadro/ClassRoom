@@ -27,11 +27,21 @@ header{
     background: #2d314e;
 }
 
-header h1{
-    margin-right: 7.5%;
-    font-size: 35px;
-    color: #F7F7F2;
+#profil-ctnr{
+    display: flex;
+    padding: 15px;
+}
+
+#profil-img{
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+#profil-name{
     font-family: 'Gudea Bolt';
+    color: #F7F7F2;
 }
 
 #img-main-page{
@@ -59,10 +69,12 @@ header h1{
     margin-bottom: 15px;
 }
 
-#btn-logout p{
+#btn-logout a{
     margin-right: 10px;
     margin-left: 5px;
     font-size: 19px;
+    text-decoration: none;
+    color: #F7F7F2;
 }
 
 #btn-logout:hover{
@@ -70,6 +82,19 @@ header h1{
     background-color: #2d314e;
     color: #eb2a5c;
     transition-duration: 0.5s;
+}
+
+#body-title-ctnr{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#body-title-ctnr h1{
+    font-size: 45px;
+    color: #2d314e;
+    margin-top: 30px;
+    font-family: 'Gudea Bolt';
 }
 
 /* Tableaux */

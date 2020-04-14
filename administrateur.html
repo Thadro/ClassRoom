@@ -9,10 +9,17 @@
 </head>
 <body>
     <header>
+        <div id="profil-ctnr">
+            <img src="./assets/img/user-img.jpg" alt="" id="profil-img">
+            <p id="profil-name">Romain Deneuve</p>
+        </div>
         <img src="assets/img/Ecole-Multimedia.jpg" alt="logo-ecole" id="img-main-page"  />
-        <h1>Espace administrateur</h1>
         <button id="btn-logout"><a href="index.html">Déconnexion</a><i class="fas fa-power-off"></i></button>
     </header>
+
+    <div id="body-title-ctnr">
+        <h1>Espace administrateur</h1>
+    </div>
 
     <nav>
         <div id="classroom-section-title"><h3 id='class-title'><i class="fas fa-chalkboard-teacher"></i>Classe</h3></div>
@@ -276,7 +283,7 @@
                     <option value="day">Journée entière</option>
                 </select>
 
-                <button type="submit">Enregistrer</button>
+                <button type="submit" id="btn-add-cours">Enregistrer</button>
             </form>
         </section>
     </div>
