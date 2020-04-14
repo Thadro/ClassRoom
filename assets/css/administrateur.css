@@ -221,7 +221,7 @@ td{
 #bottom-section
 {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     margin-bottom: 5%;
 }
 
@@ -384,17 +384,31 @@ td{
     transition-duration: 0.5s;
 }
 
+/* Gestion des erreurs de formulaire: A developper*/
+h4[id*="error-title"]
+{
+    color: red;
+    display: none;
+}
+
 /* Formulaire pour ajouter une classe */
+#class-section
+{
+    width: 30%;
+    height: 50px;
+    margin-right: 2%;
+}
+
 #new-class-form
 {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 105%;
+    width: 92%;
     margin-left: 5%;
 }
 
-#new-class-form > svg, #user-form-container > svg
+#new-class-form > svg, #user-form-container > svg, #new-teacher-form > svg
 {
     color: green;
 }
@@ -404,8 +418,29 @@ td{
     display: none;
 }
 
+
+/* Formulaire pour ajouter un prof */
+#new-teacher-form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#new-teacher-form > button
+{
+    width: 50%;
+    margin-top: 2%;
+}
+
+
+/* Formulaire pour ajouter un élève */
 /* Second dropdown */
-/* Dropdown Button */
+.dropdown-user
+{
+    margin-right: 1%;
+}
+
 .dropbtn 
 {
     background-color: #eb2a5c;
@@ -420,7 +455,6 @@ td{
 }
 
 /* Dropdown button on hover & focus */
-
 .dropbtn > p{
     text-decoration: none;
     color: #F7F7F2;
@@ -451,8 +485,6 @@ td{
     display:block;
 }
 
-
-/* Formulaire pour ajouter un utilisateur */
 #user-form-container
 {
     text-align: center;
@@ -462,13 +494,6 @@ td{
 {
     margin-right: 2%;
     color: green;
-}
-
-/* Gestion des erreurs de formulaire: A developper*/
-h4[id*="error-title"]
-{
-    color: red;
-    display: none;
 }
 
 #new-user-form
@@ -488,49 +513,6 @@ h4[id*="error-title"]
 
 #new-user-form > h4 {
     margin-top: 20px;
-}
-
-#new-user-form > button
-{
-    width: 50%;
-    margin: 15% auto 5% auto;
-    
-}
-
-
-/* Formulaire pour ajouter une classe */
-#new-class-form
-{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 105%;
-    margin-left: 5%;
-}
-
-#new-class-form > svg, #user-form-container > svg
-{
-    color: green;
-}
-
-
-/* Formulaire pour ajouter un utilisateur */
-#user-form-container
-{
-    text-align: center;
-}
-
-#user-form-container > h3 > svg
-{
-    margin-right: 2%;
-    color: green;
-}
-
-#new-user-form
-{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
 }
 
 #new-user-form > button
@@ -603,11 +585,12 @@ h4[id*="error-title"]
     cursor: pointer;
 }
 
+
 /* Section planning */
 #planning-bottom-section
 {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .planning-dropdown-container
