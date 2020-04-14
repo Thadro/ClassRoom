@@ -1,12 +1,6 @@
 Fonctionnement de l'application :
 
 - La page de connexion ne marche qu'avec le Login d'un élève entré par l'administrateur sur la page index.html (pour l'instant)
-- Login et mdp élève :
-	login : stud
-	password : azerty
--Login et mdp admin :
-	login : root
-	password: root
 
 -----------------------------------------------
 
