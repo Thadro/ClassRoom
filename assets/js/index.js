@@ -46,14 +46,9 @@ function userConnexion(event)
                     self.location.href = 'élève.html';
                }
 
-               if(user.user_Type == 'formateur')
+               if(user.user_Type == 'prof')
                {
                     self.location.href = 'formateur.html';
-               }
-
-               if(user.user_Type  == 'adminitrateur')
-               {
-                    self.location.href = 'administrateur.html';
                }
             }
         })

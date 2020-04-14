@@ -124,7 +124,7 @@ function showUser(class_Selected)
     })
 }
 
-//Gestion des information de classe et d'élève
+//Gestion des information de classe, d'élève et de formateur
 
 //Partie 2: Gestion des classes
 //Fonction 2: Permet d'ajouter une nouvelle classe dans la base de donnée
@@ -175,7 +175,34 @@ function onDeleteClass()
     database.ref('classroom/' +class_Target).set(null);
 }
 
-//Partie 3: Gestion des élèves
+// Partie 3: Gestion des formateurs
+//Fonction 3: Permet de rajouter un formateur dans la base de donnée
+$('#new-teacher-form').on('submit', onAddTeacher);
+
+function onAddTeacher(event)
+{
+    event.preventDefault();
+
+    let teacher_Id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    let name = $('#name').val();
+    let pseudo = $('#teacher-pseudo').val();
+    let password = $('#teacher-password').val();
+    let teacher_Classe = class_Selected;
+
+    let data = {
+        name: name,
+        pseudo: pseudo,
+        password: password,
+        class: teacher_Classe,
+        user_Type: 'prof',
+        user_Id: teacher_Id
+    }
+
+    //Liste des utilisateurs utilisé pour l'autentification
+    database.ref('user-list/' +teacher_Id).set(data);
+}
+
+//Partie 4: Gestion des élèves
 //Fonction 3: Permet de rajouter un utilisateur dans la base de donnée
 $('#new-user-form').on('submit', onAddUser);
 
@@ -275,7 +302,8 @@ function onModifUser(event)
 }
 
   //Affichage du formulaire d'ajout d'utilisateur
-    function dropDownFunction() {
+    function dropDownFunction() 
+    {
         document.getElementById("myDropdown").classList.toggle("show");
     }
 
