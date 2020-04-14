@@ -448,14 +448,66 @@ h4[id*="error-title"]
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin: 15px 0;
+    padding: 15px;
+    background-color: #F1F1F1;
+    margin-right: 25px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
 }
 
-#new-teacher-form > button
+#name{
+    margin: 15px 0;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+}
+
+#teacher-pseudo{
+    margin: 15px 0;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+}
+
+#teacher-password{
+    margin: 15px 0;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+}
+
+#teacher-password-confirm{
+    margin: 15px 0;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
+}
+
+#submit-new-prof
 {
-    width: 50%;
-    margin-top: 2%;
+    background-color: #eb2a5c;
+    width: 120px;
+    color: #F7F7F2;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border: 1px solid #F7F7F2;
+    border-radius: 2px;
+    margin-bottom: 15px;
 }
 
+#submit-new-prof:hover{
+    background-color: #2d314e;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
 
 /* Formulaire pour ajouter un élève */
 /* Second dropdown */

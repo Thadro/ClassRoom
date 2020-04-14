@@ -72,23 +72,25 @@
 
             </div>
 
-            <form id="new-teacher-form">
-                <h3>Ajouter un formateur</h3>
+        <button onclick="dropDownFunction()" class="dropbtn"><p>Ajouter un formateur</p></button>
+            <div id="myDropdown" class="dropdown-content">
+                <form id="new-teacher-form">
+                        <h3>Ajouter un formateur</h3>
 
-                <h4>Nom</h4>
-                <input type="text" id="name" />
+                        <h4>Nom</h4>
+                        <input type="text" id="name" />
 
-                <h4>Pseudo</h4>
-                <input type="text" id="teacher-pseudo"  />
+                        <h4>Pseudo</h4>
+                        <input type="text" id="teacher-pseudo"  />
 
-                <h4>Mots de passe</h4>
-                <input type="password" id="teacher-password"  />
+                        <h4>Mots de passe</h4>
+                        <input type="password" id="teacher-password"  />
 
-                <h4>Confirmation du mots de passe</h4>
-                <input type="password" id="teacher-password-confirm" /><br />
-                <button type="submit">Enregistrer</button>
-            </form>
-
+                        <h4>Confirmation du mots de passe</h4>
+                        <input type="password" id="teacher-password-confirm" /><br />
+                        <button type="submit" id="submit-new-prof">Enregistrer</button>
+                    </form>
+            </div>
             <div class="dropdown-user">
                 <button onclick="dropDownFunction()" class="dropbtn"><p>Ajouter un élève</p></button>
                 <div id="myDropdown" class="dropdown-content">
