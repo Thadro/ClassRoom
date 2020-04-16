@@ -82,7 +82,7 @@ function showUser(class_Selected)
                             <td>
 
                                     <button type="submit" id=${user.user_Id} class='delete-user-button'><i class="fas fa-times"></i></button>
-                                    ${user.nom}
+                                    ${user.name}
 
                             </td>
 
@@ -203,7 +203,7 @@ function onAddTeacher(event)
 }
 
 //Partie 4: Gestion des élèves
-//Fonction 3: Permet de rajouter un utilisateur dans la base de donnée
+//Fonction 3: Permet de rajouter un élève dans la base de donnée
 $('#new-user-form').on('submit', onAddUser);
 
 function onAddUser(event)
@@ -249,7 +249,7 @@ function onAddUser(event)
 
     //Data student: contient les informations de l'élève
     let data_Student = {
-        nom : nom,
+        name : nom,
         tel : tel,
         sexe : sexe,
         user_Id: user_Id
@@ -257,6 +257,8 @@ function onAddUser(event)
 
     //Data user: contient les informations de l'utilisateur
     let data_User = {
+        name: nom,
+        class: class_Selected,
         pseudo: pseudo,
         password: password,
         user_Type: "élève",

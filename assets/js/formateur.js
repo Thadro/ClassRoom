@@ -9,20 +9,32 @@ var firebaseConfig = {
     messagingSenderId: "613309391988",
     appId: "1:613309391988:web:87116cee59aff788fe5d21"
   };
+
 // Initialisation Firebase
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
 
 let token = localStorage.getItem('token');
+console.log(token);
 
-//PARTIE CLASSE
-//Affichage de la classe du formateur
+//Affichage des information de l'utilisateur
+database.ref('user-connected/' +token).on('value', function(snapshot){
 
+    $('#profil-name').empty();
+
+    snapshot.forEach(function(item){
+        user = item.val();
+
+        $('#profil-name').text(user.name);
+
+        //A FAIRE AFFICHER LA CLASSE EN FONCTION DES INFOS UTILISATEURS (classe et planning)
+    })
+});
 
 //Deconnexion de l'utilisateur
 $('#btn-logout').click(function(){
-    database.ref('user-connect/' +token).set(null);
+    database.ref('user-connected/' +token).set(null);
     localStorage.setItem('token', '');
     self.location.href = 'index.html';
 })

@@ -44,6 +44,19 @@ function userConnexion(event)
             {
                if(user.user_Type == 'élève')
                {
+                    let token = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+                    let name = user.name;
+                    let class_Selected = user.class;
+
+                    let data = {
+                        name: name,
+                        class: class_Selected
+                    }
+
+                    localStorage.setItem('token', token);
+
+                    database.ref('user-connected/' +token+ '/data').set(data);
+
                     self.location.href = 'élève.html';
                }
 
@@ -55,12 +68,12 @@ function userConnexion(event)
 
                    let data = {
                        name: name,
-                       class_Selected: class_Selected
+                       class: class_Selected
                    }
 
                    localStorage.setItem('token', token);
 
-                    database.ref('user-connect/' +token).set(data);
+                    database.ref('user-connected/' +token+ '/data').set(data);
 
                     self.location.href = 'formateur.html';
                }
