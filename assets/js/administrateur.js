@@ -314,13 +314,19 @@ function onModifUser(event)
         document.getElementById("myDropdown-professeur").classList.toggle("show-prof-form");
     }
 
+  //Affichage du formulaire d'ajout du professeur
+    function dropDownFunctionCours() 
+    {
+        document.getElementById("myDropdown-cours").classList.toggle("show-cours-form");
+    }
+
 //PARTIE PLANNING
 //Fonction 1: Permet d'afficher les cours en fonctions des classes
 function showPlanning(class_Selected)
 {
     database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
 
-        $('.tab-cell-hour').css('background-color', '#2d314e');
+        $('.tab-cell-hour').css('background-color', '#f1f1f1');
         $('.tab-cell-hour').empty()
     
         snapshot.forEach(function(item){
@@ -329,7 +335,7 @@ function showPlanning(class_Selected)
     
             if(classroom.hour == "day")
             {
-                $(`td[class*=${classroom.date}]`).css('background-color', '#eb2a5c');
+                $(`td[class*=${classroom.date}]`).css('background-color', '#e2e2e2');
                 $(`td[class*=${classroom.date}]`).append(`
                     <div class="classroom-title">
                         <button class="delete-classroom-button" id=${classroom.classroom_Id}><i class="fas fa-times"></i></button>
@@ -344,7 +350,7 @@ function showPlanning(class_Selected)
             {
                 let table_Target = '.' +classroom.date+ '-' +classroom.hour;
             
-                $(table_Target).css('background-color', '#eb2a5c');
+                $(table_Target).css('background-color', '#e2e2e2');
                 $(table_Target).append(`
                 <div class="classroom-title">
                     <button class="delete-classroom-button" id=${classroom.classroom_Id}><i class="fas fa-times"></i></button>
@@ -485,6 +491,20 @@ $('.dropbtn-professeur').mouseenter(function(){
 
 $('.dropbtn-professeur').mouseleave(function(){
     $('.dropbtn-professeur > p').css({
+        'color' : '#F7F7F2',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('.dropbtn-cours').mouseenter(function(){
+    $('.dropbtn-cours > p').css({
+        'color' : '#eb2a5c',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('.dropbtn-cours').mouseleave(function(){
+    $('.dropbtn-cours > p').css({
         'color' : '#F7F7F2',
         transitionDuration: '0.5s'
     })
