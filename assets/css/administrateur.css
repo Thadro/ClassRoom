@@ -417,7 +417,7 @@ h4[id*="error-title"]
 /* Formulaire pour ajouter une classe */
 #class-section
 {
-    width: 30%;
+    width: 20%;
     height: 50px;
     margin-right: 2%;
 }
@@ -441,17 +441,64 @@ h4[id*="error-title"]
     display: none;
 }
 
+/* Ajouter un formateur */
+/* Second dropdown */
+.dropdown-professeur
+{
+    margin-right: 1%;
+}
 
-/* Formulaire pour ajouter un prof */
+.dropbtn-professeur
+{
+    background-color: #eb2a5c;
+    width: 150px;
+    color: #F7F7F2;
+    margin-right: 170px;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border: 1px solid #F7F7F2;
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn-professeur > p{
+    text-decoration: none;
+    color: #F7F7F2;
+    margin: 0;
+}
+
+.dropbtn-professeur:hover 
+{
+    background-color: #2d314e;
+    transition-duration: 0.5s;
+    cursor: pointer;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content-professeur 
+{
+    display: none;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    width: 200%;
+}
+
+.show-prof-form
+{
+    display:block;
+    width: 350px;
+}
+
 #new-teacher-form
 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 15px 0;
-    padding: 15px;
     background-color: #F1F1F1;
-    margin-right: 25px;
     border: none;
     outline: none;
     border-radius: 3px;
@@ -508,7 +555,6 @@ h4[id*="error-title"]
     transition-duration: 0.5s;
     cursor: pointer;
 }
-
 /* Formulaire pour ajouter un élève */
 /* Second dropdown */
 .dropdown-user
@@ -521,6 +567,7 @@ h4[id*="error-title"]
     background-color: #eb2a5c;
     width: 120px;
     color: #F7F7F2;
+    margin-right: 300px;
     padding: 10px;
     border: none;
     outline: none;
@@ -558,6 +605,7 @@ h4[id*="error-title"]
 .show 
 {
     display:block;
+    width: 350px;
 }
 
 #user-form-container
@@ -598,7 +646,7 @@ h4[id*="error-title"]
 
 #nom{
     margin: 15px 0;
-    padding: 15px;
+    padding: 10px;
     border: none;
     outline: none;
     border-radius: 3px;
@@ -606,7 +654,7 @@ h4[id*="error-title"]
 
 #tel{
     margin: 15px 0;
-    padding: 15px;
+    padding: 10px;
     border: none;
     outline: none;
     border-radius: 3px;
@@ -614,7 +662,7 @@ h4[id*="error-title"]
 
 #pseudo{
     margin: 15px 0;
-    padding: 15px;
+    padding: 10px;
     border: none;
     outline: none;
     border-radius: 3px;
@@ -622,7 +670,7 @@ h4[id*="error-title"]
 
 #password{
     margin: 15px 0;
-    padding: 15px;
+    padding: 10px;
     border: none;
     outline: none;
     border-radius: 3px;
@@ -630,7 +678,7 @@ h4[id*="error-title"]
 
 #password_confirm{
     margin: 15px 0;
-    padding: 15px;
+    padding: 10px;
     border: none;
     outline: none;
     border-radius: 3px;
@@ -659,7 +707,6 @@ h4[id*="error-title"]
     transition-duration: 0.5s;
     cursor: pointer;
 }
-
 
 /* Section planning */
 #planning-bottom-section

@@ -308,6 +308,12 @@ function onModifUser(event)
     }
 
 
+  //Affichage du formulaire d'ajout du professeur
+    function dropDownFunctionProfesseur() 
+    {
+        document.getElementById("myDropdown-professeur").classList.toggle("show-prof-form");
+    }
+
 //PARTIE PLANNING
 //Fonction 1: Permet d'afficher les cours en fonctions des classes
 function showPlanning(class_Selected)
@@ -465,6 +471,20 @@ $('.dropbtn').mouseenter(function(){
 
 $('.dropbtn').mouseleave(function(){
     $('.dropbtn > p').css({
+        'color' : '#F7F7F2',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('.dropbtn-professeur').mouseenter(function(){
+    $('.dropbtn-professeur > p').css({
+        'color' : '#eb2a5c',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('.dropbtn-professeur').mouseleave(function(){
+    $('.dropbtn-professeur > p').css({
         'color' : '#F7F7F2',
         transitionDuration: '0.5s'
     })
