@@ -27,6 +27,7 @@ function userConnexion(event)
     let pseudo = $('#sign-in-identifiant').val();
     let password = $('#sign-in-mdp').val();
     
+    //Cas particulié pour l'administrateur puisque ses identifiants sont définits de base dans l'application
     if(pseudo == 'root' && password == 'root')
     {
         self.location.href = 'administrateur.html'
@@ -48,8 +49,22 @@ function userConnexion(event)
 
                if(user.user_Type == 'prof')
                {
+                   let token = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+                   let name = user.name;
+                   let class_Selected = user.class;
+
+                   let data = {
+                       name: name,
+                       class_Selected: class_Selected
+                   }
+
+                   localStorage.setItem('token', token);
+
+                    database.ref('user-connect/' +token).set(data);
+
                     self.location.href = 'formateur.html';
                }
+
             }
         })
     })

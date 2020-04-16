@@ -14,9 +14,18 @@ firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
 
+let token = localStorage.getItem('token');
+
 //PARTIE CLASSE
 //Affichage de la classe du formateur
 
+
+//Deconnexion de l'utilisateur
+$('#btn-logout').click(function(){
+    database.ref('user-connect/' +token).set(null);
+    localStorage.setItem('token', '');
+    self.location.href = 'index.html';
+})
 
 //Affichage tableau des élèves
 $('#classroom-section-title').click(function(){

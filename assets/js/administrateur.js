@@ -301,11 +301,11 @@ function onModifUser(event)
     $('#modif-form-target').removeAttr('id');
 }
 
-  //Affichage du formulaire d'ajout d'utilisateur
-    function dropDownFunction() 
-    {
-        document.getElementById("myDropdown").classList.toggle("show");
-    }
+//Affichage du formulaire d'ajout d'utilisateur
+function dropDownFunction() 
+{
+    document.getElementById("myDropdown").classList.toggle("show");
+}
 
 
 //PARTIE PLANNING
