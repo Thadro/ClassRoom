@@ -72,8 +72,9 @@
 
             </div>
 
-        <button onclick="dropDownFunction()" class="dropbtn"><p>Ajouter un formateur</p></button>
-            <div id="myDropdown" class="dropdown-content">
+    <div class="dropdown-professeur">
+        <button onclick="dropDownFunctionProfesseur()" class="dropbtn-professeur"><p>Ajouter un formateur</p></button>
+            <div id="myDropdown-professeur" class="dropdown-content-professeur">
                 <form id="new-teacher-form">
                         <h3>Ajouter un formateur</h3>
 
@@ -91,44 +92,46 @@
                         <button type="submit" id="submit-new-prof">Enregistrer</button>
                     </form>
             </div>
-            <div class="dropdown-user">
-                <button onclick="dropDownFunction()" class="dropbtn"><p>Ajouter un élève</p></button>
-                <div id="myDropdown" class="dropdown-content">
-                    <div id="user-form-container">
+    </div>
+
+    <div class="dropdown-user">
+        <button onclick="dropDownFunction()" class="dropbtn"><p>Ajouter un élève</p></button>
+            <div id="myDropdown" class="dropdown-content">
+                <div id="user-form-container">
         
-                        <h4 id="error-title1">Avant d'ajouter un utilisateur, vous devez d'abord selectionner une classe !</h4>
-                        <h4 id="error-title2">L'integralité des champs doit etre remplis, veuillez recommencer !</h4>
-                        <h4 id="error-title3">Les champs de mots de passe ne sont pas identique, veuillez recommencer !</h4>
+                    <h4 id="error-title1">Avant d'ajouter un utilisateur, vous devez d'abord selectionner une classe !</h4>
+                    <h4 id="error-title2">L'integralité des champs doit etre remplis, veuillez recommencer !</h4>
+                    <h4 id="error-title3">Les champs de mots de passe ne sont pas identique, veuillez recommencer !</h4>
         
-                        <form id="new-user-form">
-                            <h3>Information personnelle</h3>
-                            <h4>Nom</h4>
-                            <input type="text" id="nom" />
+                    <form id="new-user-form">
+                        <h3>Information personnelle</h3>
+                        <h4>Nom</h4>
+                        <input type="text" id="nom" />
         
-                            <h4>Telephone</h4>
-                            <input type="text" id="tel" />
+                        <h4>Telephone</h4>
+                        <input type="text" id="tel" />
         
-                            <h4>Sexe</h4>
-                            <div id="radio-container">
-                                <input type="radio" name="sexe" value="Homme" id="Homme" checked/><label for="Homme">Homme</label>
-                                <input type="radio" name="sexe" value="Femme" id="Femme" /><label for="Femme">Femme</label>
-                            </div>
+                        <h4>Sexe</h4>
+                        <div id="radio-container">
+                            <input type="radio" name="sexe" value="Homme" id="Homme" checked/><label for="Homme">Homme</label>
+                            <input type="radio" name="sexe" value="Femme" id="Femme" /><label for="Femme">Femme</label>
+                        </div>
         
-                            <h3>Identifiant de connexion</h3>
-                            <h4>Pseudo</h4>
-                            <input type="text" id="pseudo" />
-        
-                            <h4>Mots de passe</h4>
-                            <input type="password" id="password" />
-        
-                            <h4>Confirmation du mots de passe</h4>
-                            <input type="password" id="password_confirm" />
-        
-                            <button type="submit" id="register-student"><p>Enregistrer</p></button>
-                        </form>
-                    </div>
+                        <h3>Identifiant de connexion</h3>
+                        <h4>Pseudo</h4>
+                        <input type="text" id="pseudo" />
+    
+                        <h4>Mots de passe</h4>
+                        <input type="password" id="password" />
+    
+                        <h4>Confirmation du mots de passe</h4>
+                        <input type="password" id="password_confirm" />
+    
+                        <button type="submit" id="register-student"><p>Enregistrer</p></button>
+                    </form>
                 </div>
-        </div>
+            </div>
+    </div>
         
         </section>
     </div>
