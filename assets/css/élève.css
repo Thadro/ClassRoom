@@ -108,8 +108,8 @@ nav > div{
 }
 
 #planning-section-title{
-    background-color: #2d314e;
-    color: #eb2a5c;
+    background-color: #f1f1f1;
+    color: #2d314e;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -117,7 +117,7 @@ nav > div{
 #planning-section-title:hover{
     cursor:pointer;
     background-color: #2d314e;
-    color: #F7F7F2;
+    color: #eb2a5c;
     transition-duration: 0.5s;
 }
 
@@ -140,7 +140,7 @@ table{
     width: 98%;
     margin: 2% auto 2% auto;
     border-collapse: collapse;
-    background-color: #2d314e;
+    background-color: #f1f1f1;
     color: #eb2a5c;
 }
 
@@ -149,19 +149,24 @@ tr{
     justify-content: space-around;
     text-align: center;
     font-size: 1.6em;
-    color: #F7F7F2;
+    color: #2d314e;
     width: 100%;
 }
 
 td, th{
     width: 100%;
+    border: 1px solid #F7F7F2;
 }
 
 th{
-    color: #eb2a5c;
+    color: #2d314e;
     font-family: 'Gudea Italic';
-    margin-top: 2%;
-    margin-bottom: 5%;
+    padding: 1%;
+}
+
+td{
+    padding-top: 3%;
+    padding-bottom: 10px;
 }
 
 .modif-form
