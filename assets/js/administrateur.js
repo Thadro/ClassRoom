@@ -63,8 +63,10 @@ database.ref('class/').on('value', function(snapshot)
     }, 500);
 })
 
+//Fonction 1: Permet de montrer la liste des formateurs en fonction de la classe
 
-//Fonction 1: Permet de montrer les utilisateurs en fonction de la classe
+
+//Fonction 2: Permet de montrer les utilisateurs en fonction de la classe
 function showUser(class_Selected)
 {
     database.ref('class/' +class_Selected+ '/student-list').on('value', function(snapshot) {
@@ -79,6 +81,7 @@ function showUser(class_Selected)
 
             //Afin d'éviter que la boucle affiche 'undefined' en lisant l'entrée class_Name
             content += `<tr>
+                            <td>Elève</td>
                             <td>
 
                                     <button type="submit" id=${user.user_Id} class='delete-user-button'><i class="fas fa-times"></i></button>
@@ -130,7 +133,7 @@ function showUser(class_Selected)
 //Gestion des information de classe, d'élève et de formateur
 
 //Partie 2: Gestion des classes
-//Fonction 2: Permet d'ajouter une nouvelle classe dans la base de donnée
+//Fonction 3: Permet d'ajouter une nouvelle classe dans la base de donnée
 $('#new-class-form').on('submit', onAddClass);
 
 function onAddClass(event)
@@ -157,7 +160,7 @@ function onAddClass(event)
     database.ref('class/' +new_Class).set({class_Name: new_Class});
 }
 
-//Fonction 3: Permet de supprimer une classe de la base de donnée
+//Fonction 4: Permet de supprimer une classe de la base de donnée
 $('#delete-class').click(onDeleteClass);
 
 function onDeleteClass()
@@ -183,7 +186,7 @@ function onDeleteClass()
 
 
 // Partie 3: Gestion des formateurs
-//Fonction 3: Permet de rajouter un formateur dans la base de donnée
+//Fonction 5: Permet de rajouter un formateur dans la base de donnée
 $('#new-teacher-form').on('submit', onAddTeacher);
 
 function onAddTeacher(event)
@@ -241,8 +244,12 @@ function onAddTeacher(event)
     //     });
     // });
 
+    let data_Teacher = {
+        name: name,
+    }
 
-    let data = {
+
+    let data_User = {
         name: name,
         pseudo: pseudo,
         password: password,
@@ -251,8 +258,11 @@ function onAddTeacher(event)
         user_Id: teacher_Id
     }
 
+    //Liste des professeur utilisée pour l'affichage des données en fonction de la classe
+    database.ref('class/' +class_Selected+ '/teacher-list').set(data_Teacher);
+
     //Liste des utilisateurs utilisé pour l'autentification
-    database.ref('user-list/' +teacher_Id).set(data);
+    database.ref('user-list/' +teacher_Id).set(data_User);
 }
 
 
@@ -260,7 +270,7 @@ function onAddTeacher(event)
 
 
 //Partie 4: Gestion des élèves
-//Fonction 3: Permet de rajouter un élève dans la base de donnée
+//Fonction 6: Permet de rajouter un élève dans la base de donnée
 $('#new-user-form').on('submit', onAddUser);
 
 function onAddUser(event)
@@ -332,7 +342,7 @@ function onAddUser(event)
 }
 
 
-//Fonction 4: Permet de supprimer un utilisateur de la base de donnée
+//Fonction 7: Permet de supprimer un utilisateur de la base de donnée
 function onDeleteUser()
 {
 
@@ -343,7 +353,7 @@ function onDeleteUser()
 }
 
 
-//Fonction 5: Permet de modifier les information d'un utilisateur dans la base de donnée
+//Fonction 8: Permet de modifier les information d'un utilisateur dans la base de donnée
 function onModifUser(event)
 {
     event.preventDefault();
@@ -386,7 +396,7 @@ function dropDownFunctionCours()
 
 
 //PARTIE PLANNING
-//Fonction 1: Permet d'afficher les cours en fonctions des classes
+//Fonction 9: Permet d'afficher les cours en fonctions des classes
 function showPlanning(class_Selected)
 {
     database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
@@ -439,7 +449,7 @@ function showPlanning(class_Selected)
 }
 
 
-//Fonction 2: Permet d'ajouter un cour dans la base de données 
+//Fonction 10: Permet d'ajouter un cour dans la base de données 
 $('#classroom-form').on('submit', onAddClassroom);
 
 function onAddClassroom(event)
@@ -473,7 +483,7 @@ function onDeleteCLassroom()
 }
 
 
-//Fonction 3: Permet d'ajouter un classe dans le formulaire d'ajout du planning
+//Fonction 11: Permet d'ajouter un classe dans le formulaire d'ajout du planning
 $('#planning-new-class-form').on('submit', onAddClassPlanning);
 
 function onAddClassPlanning(event)
