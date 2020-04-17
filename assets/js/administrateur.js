@@ -52,6 +52,8 @@ database.ref('class/').on('value', function(snapshot)
             $('#class-title').empty();
             $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>' +class_Selected);
 
+
+            showTeacher(class_Selected);
             showUser(class_Selected);
             showPlanning(class_Selected);
         });
@@ -64,14 +66,66 @@ database.ref('class/').on('value', function(snapshot)
 })
 
 //Fonction 1: Permet de montrer la liste des formateurs en fonction de la classe
+function showTeacher(class_Selected)
+{
+    database.ref('class/' +class_Selected+ '/teacher-list').on('value', function(snapshot) {
 
+        $('#teacher').empty();   
+        
+        let content = '';
+
+        snapshot.forEach(function(item) {
+
+            const user = item.val();
+
+            //Afin d'éviter que la boucle affiche 'undefined' en lisant l'entrée class_Name
+            content += `<tr>
+                            <td>Prof</td>
+                            <td>
+
+                                    <button type="submit" id=${user.user_Id} class='delete-teacher-button'><i class="fas fa-times"></i></button>
+                                    ${user.name}
+
+                            </td>
+
+                            <td>&nbsp;</td>
+                            <td>&nbsp;</td>
+
+                            <td>
+                                <form class="teacher-modif-form">
+                                    <p>Nom</p>
+                                    <input type="text"  />
+                                    <input type="hidden" value=${user.user_Id}   />
+                                    <Button type="submit">Enregistrer</Button>
+                                </form>
+                            </td>
+                        </tr>`;
+        });
+
+        $('#teacher').append(content);
+
+        setTimeout(() => {
+            
+            $('.delete-teacher-button').click(function(){
+                $(this).attr('class', 'delete-teacher-button-target')
+                onDeleteTeacher()
+            })
+
+            $('.teacher-modif-form').click(function(){
+                $(this).attr('id', 'teacher-modif-form-target');
+                setTimeout(() => $('#teacher-modif-form-target').on('submit', onModifTeacher), 500);
+            });
+  
+        }, 500);
+    });
+}
 
 //Fonction 2: Permet de montrer les utilisateurs en fonction de la classe
 function showUser(class_Selected)
 {
     database.ref('class/' +class_Selected+ '/student-list').on('value', function(snapshot) {
 
-        $('#users').empty();   
+        $('#student').empty();   
         
         let content = '';
 
@@ -107,7 +161,7 @@ function showUser(class_Selected)
                         </tr>`;
         });
 
-        $('#users').append(content);
+        $('#student').append(content);
         
         //Gestionnaire d'évenement pour la suppression et la modification.
         //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery
@@ -246,6 +300,7 @@ function onAddTeacher(event)
 
     let data_Teacher = {
         name: name,
+        user_Id: teacher_Id,
     }
 
 
@@ -259,15 +314,41 @@ function onAddTeacher(event)
     }
 
     //Liste des professeur utilisée pour l'affichage des données en fonction de la classe
-    database.ref('class/' +class_Selected+ '/teacher-list').set(data_Teacher);
+    database.ref('class/' +class_Selected+ '/teacher-list/'+ teacher_Id).set(data_Teacher);
 
     //Liste des utilisateurs utilisé pour l'autentification
     database.ref('user-list/' +teacher_Id).set(data_User);
 }
 
+//Fonction pour modifié un formateur dans le tableau de la classe
+
+function onModifTeacher(event)
+{   
+    event.preventDefault();
 
 
+    let new_Value = $('#teacher-modif-form-target > input[type="text"]').val();
+    let teacher_Selected = $('#teacher-modif-form-target > input[type="hidden"]').val();
+    console.log(teacher_Selected)
 
+
+    database.ref('class/' +class_Selected+ '/teacher-list/' +teacher_Selected+ '/name').set(new_Value);
+
+    //On enleve l'id au formulaire pour éviter de marquer plusieurs formulaire avec le meme id
+    $('#modif-form-target').removeAttr('id'); 
+}
+
+//Fonction pour supprimé un professeur
+
+function onDeleteTeacher()
+{
+    let teacher_Selected = $('.delete-teacher-button-target').attr('id')
+    console.log(teacher_Selected)
+
+    database.ref('class/' +class_Selected+ '/teacher-list/' +teacher_Selected).set(null);
+    database.ref('user-list/' +teacher_Selected).set(null);
+
+}
 
 //Partie 4: Gestion des élèves
 //Fonction 6: Permet de rajouter un élève dans la base de donnée
