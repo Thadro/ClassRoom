@@ -124,6 +124,9 @@ function showUser(class_Selected)
     })
 }
 
+
+
+
 //Gestion des information de classe, d'élève et de formateur
 
 //Partie 2: Gestion des classes
@@ -175,6 +178,10 @@ function onDeleteClass()
     database.ref('classroom/' +class_Target).set(null);
 }
 
+
+
+
+
 // Partie 3: Gestion des formateurs
 //Fonction 3: Permet de rajouter un formateur dans la base de donnée
 $('#new-teacher-form').on('submit', onAddTeacher);
@@ -183,11 +190,57 @@ function onAddTeacher(event)
 {
     event.preventDefault();
 
+    //On efface les messages d'erreurs à chaque nouvelle envoie de formulaire
+    $('#error-title-teacher-form1').css('display', 'none');
+    $('#error-title-teacher-form2').css('display', 'none');
+    $('#error-title-teacher-form3').css('display', 'none');
+    $('#error-title-teacher-form4').css('display', 'none');
+
     let teacher_Id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     let name = $('#name').val();
     let pseudo = $('#teacher-pseudo').val();
     let password = $('#teacher-password').val();
+    let password_Confirm = $('#teacher-password-confirm').val();
     let teacher_Classe = class_Selected;
+
+    //Gestion des cas d'erreur
+    
+    //Cas 1: Aucune classe n'a étè sélèctionnée
+    if(class_Selected == "")
+    {
+        $('#error-title-teacher-form1').css('display', 'block');
+        return;
+    }
+
+    //Cas 2: Les champs sont vides
+    if(name == "" || pseudo == "" || password == "" || password_Confirm == "")
+    {
+        $('#error-title-teacher-form2').css('display', 'block');
+        return;
+    }
+
+    //Cas 3: Probleme de correspondance entre les mots de passe
+    if(password != password_Confirm)
+    {
+        $('#error-title-teacher-form3').css('display', 'block');
+        return;
+    }
+
+    //Cas 4: le pseudo ou mots de passe est déjà inscrit dans la base de données (en développement)
+    // database.ref('user-list/').on('value', function(snapshot) {
+    //     snapshot.forEach(function(item) {
+    //         user = item.val();
+
+    //         console.log(user);
+
+    //         if(name == user.name || pseudo == user.pseudo || password == user.password)
+    //         {
+    //             $('#error-title-teacher-form4').css('display', 'block');
+    //             console.log("debug");
+    //         }
+    //     });
+    // });
+
 
     let data = {
         name: name,
@@ -201,6 +254,10 @@ function onAddTeacher(event)
     //Liste des utilisateurs utilisé pour l'autentification
     database.ref('user-list/' +teacher_Id).set(data);
 }
+
+
+
+
 
 //Partie 4: Gestion des élèves
 //Fonction 3: Permet de rajouter un élève dans la base de donnée
@@ -224,7 +281,7 @@ function onAddUser(event)
     //Data user
     let pseudo = $('#pseudo').val();
     let password = $('#password').val();
-    let passwordConfirm = $('#password_confirm').val();
+    let password_Confirm = $('#password_confirm').val();
 
     // Gestion des cas d'erreurs
     if(class_Selected == "")
@@ -234,14 +291,14 @@ function onAddUser(event)
     }
 
     //1 champs non remplis
-    if(nom == "" || tel == "" || sexe == "" || pseudo == "" || password == "" || passwordConfirm == "")
+    if(nom == "" || tel == "" || sexe == "" || pseudo == "" || password == "" || password_Confirm == "")
     {
         $('#error-title2').css('display', 'block');
         return;
     }
 
     //2 Erreur de mots de passe
-    if(password != passwordConfirm)
+    if(password != password_Confirm)
     {
         $('#error-title3').css('display', 'block');
         return;
@@ -303,24 +360,30 @@ function onModifUser(event)
     $('#modif-form-target').removeAttr('id');
 }
 
+
+
+
+
 //Affichage du formulaire d'ajout d'utilisateur
 function dropDownFunction() 
 {
     document.getElementById("myDropdown").classList.toggle("show");
 }
 
+//Affichage du formulaire d'ajout du professeur
+function dropDownFunctionProfesseur() 
+{
+    document.getElementById("myDropdown-professeur").classList.toggle("show-prof-form");
+}
 
-  //Affichage du formulaire d'ajout du professeur
-    function dropDownFunctionProfesseur() 
-    {
-        document.getElementById("myDropdown-professeur").classList.toggle("show-prof-form");
-    }
+//Affichage du formulaire d'ajout du professeur
+function dropDownFunctionCours() 
+{
+    document.getElementById("myDropdown-cours").classList.toggle("show-cours-form");
+}
 
-  //Affichage du formulaire d'ajout du professeur
-    function dropDownFunctionCours() 
-    {
-        document.getElementById("myDropdown-cours").classList.toggle("show-cours-form");
-    }
+
+
 
 //PARTIE PLANNING
 //Fonction 1: Permet d'afficher les cours en fonctions des classes

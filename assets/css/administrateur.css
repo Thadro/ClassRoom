@@ -502,6 +502,7 @@ h4[id*="error-title"]
     border: none;
     outline: none;
     border-radius: 3px;
+    text-align: center;
 }
 
 #name{
