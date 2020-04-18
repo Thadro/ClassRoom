@@ -198,18 +198,61 @@ td{
 {
     width: 50%;
     margin-top: 2%;
-    margin-bottom: 3%;
+    border: none;
+    background-color: transparent;
+    box-shadow: none;
+    overflow: hidden;
+    -moz-appearance: none;
+    appearance: none;
+
+}
+
+.modif-form select{
+    border: none;
+}
+
+.modif-form  option{
+    border: none;
+}
+
+.modif-form > select:after{
+
+    border: solid transparent;
+    border-color: #f1f1f1;
+}
+
+.modif-form > select:focus{
+    outline: none;
 }
 
 .modif-form > input
 {
     width: 50%;
     margin-bottom: 2%;
+    margin: 15px 0;
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-radius: 3px;
 }
 
 .modif-form > button
 {
     margin-bottom: 10%;
+    background-color: #F1F1F1;
+    width: 120px;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+    border-radius: 2px;
+}
+
+.modif-form > button:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer;
 }
 
 .modif_form
