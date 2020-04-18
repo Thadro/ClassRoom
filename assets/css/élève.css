@@ -136,6 +136,7 @@ nav > div > h3 > svg{
 
 /* Partie 2: Section centrale (tableau classe et planning) */
 /* Tableau centrale (style commun aux deux tableaux) */
+
 table{
     width: 98%;
     margin: 2% auto 2% auto;
@@ -167,54 +168,4 @@ th{
 td{
     padding-top: 3%;
     padding-bottom: 10px;
-}
-
-.modif-form
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.modif-form > select
-{
-    width: 50%;
-    margin-top: 2%;
-    margin-bottom: 3%;
-}
-
-.modif-form > input
-{
-    width: 50%;
-    margin-bottom: 2%;
-}
-
-.modif-form > button
-{
-    margin-bottom: 10%;
-}
-
-.modif_form
-{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.modif_form > select
-{
-    width: 50%;
-    margin-top: 2%;
-    margin-bottom: 3%;
-}
-
-.modif_form > input
-{
-    width: 50%;
-    margin-bottom: 2%;
-}
-
-.modif_form > button
-{
-    margin-bottom: 10%;
 }

@@ -18,7 +18,7 @@ const database = firebase.database();
 let token = localStorage.getItem('token');
 console.log(token);
 
-//Affichage des information de l'utilisateur
+//Affichage du pseudo et récupération de la classe
 database.ref('user-connected/' +token).on('value', function(snapshot){
 
     $('#profil-name').empty();
@@ -26,16 +26,50 @@ database.ref('user-connected/' +token).on('value', function(snapshot){
     snapshot.forEach(function(item){
         user = item.val();
 
-        $('#profil-name').text(user.name);
-
-        //A FAIRE AFFICHER LA CLASSE EN FONCTION DES INFOS UTILISATEURS (planning)
+        $('#profil-name').text(user.pseudo);
+        localStorage.setItem('class', user.class);
     })
 });
+
+let class_Selected = localStorage.getItem('class');
+
+//Affichage du planning
+database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
+
+    $('.tab-cell-hour').css('background-color', '#f1f1f1');
+    $('.tab-cell-hour').empty()
+
+    snapshot.forEach(function(item){
+
+        const classroom = item.val();
+
+        if(classroom.hour == "day")
+        {
+            $(`td[class*=${classroom.date}]`).css('background-color', '#e2e2e2');
+            $(`td[class*=${classroom.date}]`).append(`
+                <h4>${classroom.title}</h4>
+                <h4>${classroom.teacher}</h4>
+            `);
+        }
+
+        else
+        {
+            let table_Target = '.' +classroom.date+ '-' +classroom.hour;
+        
+            $(table_Target).css('background-color', '#e2e2e2');
+            $(table_Target).append(`
+                <h4>${classroom.title}</h4>
+                <h4>${classroom.teacher}</h4>
+            `);
+        }
+    });
+})
 
 //Deconnexion de l'utilisateur
 $('#btn-logout').click(function(){
     database.ref('user-connected/' +token).set(null);
     localStorage.setItem('token', '');
+    localStorage.setItem('class', '');
     self.location.href = 'index.html';
 })
 
