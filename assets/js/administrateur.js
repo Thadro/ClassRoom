@@ -65,6 +65,7 @@ database.ref('class/').on('value', function(snapshot)
     }, 500);
 })
 
+
 //Fonction 1: Permet de montrer la liste des formateurs en fonction de la classe
 function showTeacher(class_Selected)
 {
@@ -108,7 +109,7 @@ function showTeacher(class_Selected)
             
             $('.delete-teacher-button').click(function(){
                 $(this).attr('class', 'delete-teacher-button-target')
-                onDeleteTeacher()
+                onDeleteTeacher();
             })
 
             $('.teacher-modif-form').click(function(){
@@ -119,6 +120,7 @@ function showTeacher(class_Selected)
         }, 500);
     });
 }
+
 
 //Fonction 2: Permet de montrer les utilisateurs en fonction de la classe
 function showUser(class_Selected)
@@ -213,6 +215,7 @@ function onAddClass(event)
 
     database.ref('class/' +new_Class).set({class_Name: new_Class});
 }
+
 
 //Fonction 4: Permet de supprimer une classe de la base de donnée
 $('#delete-class').click(onDeleteClass);
@@ -320,8 +323,8 @@ function onAddTeacher(event)
     database.ref('user-list/' +teacher_Id).set(data_User);
 }
 
-//Fonction pour modifié un formateur dans le tableau de la classe
 
+//Fonction 6: permet de modifier les information d'un formateur dans la base de donnée
 function onModifTeacher(event)
 {   
     event.preventDefault();
@@ -329,7 +332,6 @@ function onModifTeacher(event)
 
     let new_Value = $('#teacher-modif-form-target > input[type="text"]').val();
     let teacher_Selected = $('#teacher-modif-form-target > input[type="hidden"]').val();
-    console.log(teacher_Selected)
 
 
     database.ref('class/' +class_Selected+ '/teacher-list/' +teacher_Selected+ '/name').set(new_Value);
@@ -338,20 +340,23 @@ function onModifTeacher(event)
     $('#modif-form-target').removeAttr('id'); 
 }
 
-//Fonction pour supprimé un professeur
 
+//Fonction 7: permet de suppprimer un formateur de la base de donnée
 function onDeleteTeacher()
 {
     let teacher_Selected = $('.delete-teacher-button-target').attr('id')
-    console.log(teacher_Selected)
 
+    //Suppression des données prof et utilisateurs
     database.ref('class/' +class_Selected+ '/teacher-list/' +teacher_Selected).set(null);
     database.ref('user-list/' +teacher_Selected).set(null);
-
 }
 
+
+
+
+
 //Partie 4: Gestion des élèves
-//Fonction 6: Permet de rajouter un élève dans la base de donnée
+//Fonction 8: Permet de rajouter un élève dans la base de donnée
 $('#new-user-form').on('submit', onAddUser);
 
 function onAddUser(event)
@@ -423,7 +428,24 @@ function onAddUser(event)
 }
 
 
-//Fonction 7: Permet de supprimer un utilisateur de la base de donnée
+//Fonction 9: Permet de modifier les information d'un utilisateur dans la base de donnée
+function onModifUser(event)
+{
+    event.preventDefault();
+
+    let attribute = $('#modif-form-target > select').val();
+    let new_Value = $('#modif-form-target > input[type="text"]').val();
+    let user_Selected = $('#modif-form-target > input[type="hidden"]').val();
+
+
+    database.ref('class/' +class_Selected+ '/student-list/' +user_Selected+ '/' +attribute).set(new_Value);
+
+    //On enleve l'id au formulaire pour éviter de marquer plusieurs formulaire avec le meme id
+    $('#modif-form-target').removeAttr('id');
+}
+
+
+//Fonction 10: Permet de supprimer un utilisateur de la base de donnée
 function onDeleteUser()
 {
 
@@ -434,26 +456,9 @@ function onDeleteUser()
 }
 
 
-//Fonction 8: Permet de modifier les information d'un utilisateur dans la base de donnée
-function onModifUser(event)
-{
-    event.preventDefault();
-
-    let attribute = $('#modif-form-target > select').val();
-    let new_Value = $('#modif-form-target > input[type="text"]').val();
-    let user_Selected = $('#modif-form-target > input[type="hidden"]').val();
-    console.log(user_Selected, attribute)
 
 
-    database.ref('class/' +class_Selected+ '/student-list/' +user_Selected+ '/' +attribute).set(new_Value);
-
-    //On enleve l'id au formulaire pour éviter de marquer plusieurs formulaire avec le meme id
-    $('#modif-form-target').removeAttr('id');
-}
-
-
-
-
+// Fonctions de Dropdown:
 
 //Affichage du formulaire d'ajout d'utilisateur
 function dropDownFunction() 
@@ -477,7 +482,7 @@ function dropDownFunctionCours()
 
 
 //PARTIE PLANNING
-//Fonction 9: Permet d'afficher les cours en fonctions des classes
+//Fonction 11: Permet d'afficher les cours en fonctions des classes
 function showPlanning(class_Selected)
 {
     database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
@@ -530,7 +535,7 @@ function showPlanning(class_Selected)
 }
 
 
-//Fonction 10: Permet d'ajouter un cour dans la base de données 
+//Fonction 12: Permet d'ajouter un cour dans la base de données 
 $('#classroom-form').on('submit', onAddClassroom);
 
 function onAddClassroom(event)
@@ -555,6 +560,7 @@ function onAddClassroom(event)
     database.ref('classroom/' +class_Selected+ '/' +classroom_Id).set(data);
 }
 
+//Fonction 13: Permet de suprimer un cour de la base de donnée
 function onDeleteCLassroom()
 {
     let classroom_Target = $('.delete-classroom-button-target').attr('id');
@@ -564,7 +570,7 @@ function onDeleteCLassroom()
 }
 
 
-//Fonction 11: Permet d'ajouter un classe dans le formulaire d'ajout du planning
+//Fonction 14: Permet d'ajouter un classe dans le formulaire d'ajout du planning
 $('#planning-new-class-form').on('submit', onAddClassPlanning);
 
 function onAddClassPlanning(event)
@@ -576,8 +582,10 @@ function onAddClassPlanning(event)
     database.ref('class/' +new_Class).set({class_Name: new_Class});
 }
 
-//Partie 5: Gestion router
 
+
+
+//Partie 5: Gestion router
 //Affichage tableau des élèves
 $('#classroom-section-title').click(function(){
     $('#classroom-section-title').css("height", "50px");
@@ -594,8 +602,11 @@ $('#planning-section-title').click(function(){
     $('#planning-section').css("display", "block");
 })
 
-//Coloration bouton
 
+
+
+
+//Coloration bouton
 $('#btn-logout').mouseenter(function(){
     $('#btn-logout > a').css({
         'color' : '#eb2a5c',

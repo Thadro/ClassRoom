@@ -24,6 +24,9 @@ function userConnexion(event)
 {
     event.preventDefault();
 
+    //On efface le message d'erreur à chaque nouvelle du formulaire
+    $('#error-login').css('display', 'none');
+
     let pseudo = $('#sign-in-identifiant').val();
     let password = $('#sign-in-mdp').val();
     
@@ -45,11 +48,11 @@ function userConnexion(event)
                if(user.user_Type == 'élève')
                {
                     let token = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-                    let name = user.name;
+                    let pseudo = user.pseudo;
                     let class_Selected = user.class;
 
                     let data = {
-                        name: name,
+                        pseudo: pseudo,
                         class: class_Selected
                     }
 
@@ -63,11 +66,11 @@ function userConnexion(event)
                if(user.user_Type == 'prof')
                {
                    let token = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-                   let name = user.name;
+                   let pseudo = user.pseudo;
                    let class_Selected = user.class;
 
                    let data = {
-                       name: name,
+                       pseudo: pseudo,
                        class: class_Selected
                    }
 
@@ -79,12 +82,17 @@ function userConnexion(event)
                }
 
             }
+
+            //Affichage du message d'erreur
+            else
+            {
+                $('#error-login').css('display', 'block');
+            }
         })
     })
 }
 
 //Js complémentaire: mise en forme boutton
-
 $(document).ready(function(){
 
     $('#sign-in-to-chat').mouseenter(function(){
