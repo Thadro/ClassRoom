@@ -48,7 +48,10 @@ database.ref('class/').on('value', function(snapshot)
     setTimeout(() => {
         $('.list-item-title').click(function(){
             class_Selected = $(this).text();
-
+            $('#dropdown-title-class').empty();
+            $('#dropdown-title-class').append(class_Selected);
+            $('#dropdown-title-class-planning').empty();
+            $('#dropdown-title-class-planning').append(class_Selected);
             $('#class-title').empty();
             $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>' +class_Selected);
 
@@ -230,6 +233,11 @@ function onDeleteClass()
     if(class_Selected == class_Target)
     {
         class_Selected = "";
+
+        $('#dropdown-title-class').empty();
+        $('#dropdown-title-class').append('Liste des classes');
+        $('#dropdown-title-class-planning').empty();
+        $('#dropdown-title-class-planning').append('Liste des classes');
         $('#class-title').empty();
         $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>Classe');
     }
