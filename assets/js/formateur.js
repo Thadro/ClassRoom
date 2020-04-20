@@ -49,12 +49,65 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
                             <td>${user.name}</td>
                             <td>${user.tel}</td>
                             <td>${user.sexe}</td>
-                            <td><i class="fas fa-stopwatch"></i><i class="fas fa-times-circle"></i></td>
+                            <td>
+                                <form class="report-form">
+                                    <input type="hidden" value=${user.user_Id}  />
+                                    <select>
+                                        <option value="23-04-2020">23/04/2020</option>
+                                        <option value="24-04-2020">24/04/2020</option>
+                                        <option value="25-04-2020">25/04/2020</option>
+                                        <option value="26-04-2020">26/04/2020</option>
+                                        <option value="27-04-2020">27/04/2020</option>
+                                    </select>
+
+                                    <div class="radio-container">
+                                        <input type="radio" name="report" value="late" id="late"    /><label for="late">Retard</label>
+                                        <input type="radio" name="report" value="absent" id="absent" /><label for="absent">Absence</label>
+                                    </div>
+                                    <button type="submit">Enregistrer</button>
+                                </form>
+                            </td>
                         </tr>`;
         });
 
     $('#student').append(content);
+
+    //Gestionnaire d'évenement pour le systeme d'abscence et retard.
+    //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery.
+    setTimeout(() => {
+        $('.report-form').click(function(){
+            $(this).attr('id', 'report-form-target');
+            setTimeout(() => $('#report-form-target').on('submit', onReportStudent), 500);
+        });
+
+    }, 500);
 })
+
+function onReportStudent(event)
+{
+    event.preventDefault();
+
+    let report_Id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    let student_Selected = $("#report-form-target > input[type='hidden']").val();
+    let date = $('#report-form-target > select').val();
+    let report_Type = $("#report-form-target > .radio-container > input[name='report']:checked").val();
+
+    let data = {
+        date
+    }
+
+    if(report_Type == 'late')
+    {
+        database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/retard/' +report_Id).set(data);
+    }
+
+    else if(report_Type == "absent")
+    {
+        database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/absence/' +report_Id).set(data);
+    }
+
+    $('#report-form-target').removeAttr('id'); 
+}
 
 //Affichage du planning
 database.ref('classroom/' +class_Selected).on('value', function(snapshot) {

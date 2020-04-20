@@ -27,6 +27,7 @@ function userConnexion(event)
     //On efface le message d'erreur à chaque nouvelle du formulaire
     $('#error-login').css('display', 'none');
 
+    let login_Success = false;
     let pseudo = $('#sign-in-identifiant').val();
     let password = $('#sign-in-mdp').val();
     
@@ -45,6 +46,8 @@ function userConnexion(event)
             //On redirige l'utilisateur vers sa page en fonction de son user_Type
             if(pseudo == user.pseudo && password == user.password)
             {
+                login_Success = true;
+                
                if(user.user_Type == 'élève')
                {
                     let token = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
@@ -83,12 +86,12 @@ function userConnexion(event)
 
             }
 
-            //Affichage du message d'erreur
-            else
-            {
-                $('#error-login').css('display', 'block');
-            }
         })
+        //Affichage du message d'erreur
+        if(login_Success ==  false)
+        {
+            $('#error-login').css('display', 'block');
+        }
     })
 }
 

@@ -186,3 +186,10 @@ td{
     padding-top: 3%;
     padding-bottom: 10px;
 }
+
+#report-form
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

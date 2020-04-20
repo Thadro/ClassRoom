@@ -65,6 +65,11 @@ database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
     });
 })
 
+//Affichage des abscence et retard
+// database.ref('user-connected/' +token).on('value', function(snapshot){
+
+// })
+
 //Deconnexion de l'utilisateur
 $('#btn-logout').click(function(){
     database.ref('user-connected/' +token).set(null);
