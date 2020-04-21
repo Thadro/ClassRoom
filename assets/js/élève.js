@@ -28,6 +28,7 @@ database.ref('user-connected/' +token).on('value', function(snapshot){
 
         $('#profil-name').text(user.pseudo);
         localStorage.setItem('class', user.class);
+        localStorage.setItem('id', user.user_Id);
     })
 });
 
@@ -65,10 +66,48 @@ database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
     });
 })
 
-//Affichage des abscence et retard
-// database.ref('user-connected/' +token).on('value', function(snapshot){
+let student_Id = localStorage.getItem('id');
 
-// })
+//Affichage des abscence et retard
+database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-list/retard/').on('value', function(snapshot){
+    
+    snapshot.forEach(function(item){
+        
+        const late = item.val();
+
+        if(late.date.indexOf('day') != -1)
+        {
+            let date_Target = late.date.replace('-day', '');
+            $(`td[class*=${date_Target}]`).css('background-color', 'orange');
+        }
+
+        else
+        {
+           $(`td[class*=${late.date}]`).css('background-color', 'orange');
+        }
+
+    });
+})
+
+database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-list/absence/').on('value', function(snapshot){
+    
+    snapshot.forEach(function(item){
+        
+        const late = item.val();
+
+        if(late.date.indexOf('day') != -1)
+        {
+            let date_Target = late.date.replace('-day', '');
+            $(`td[class*=${date_Target}]`).css('background-color', 'red');
+        }
+
+        else
+        {
+           $(`td[class*=${late.date}]`).css('background-color', 'red');
+        }
+
+    });
+})
 
 //Deconnexion de l'utilisateur
 $('#btn-logout').click(function(){

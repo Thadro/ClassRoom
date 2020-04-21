@@ -51,10 +51,12 @@ function userConnexion(event)
                if(user.user_Type == 'élève')
                {
                     let token = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+                    let user_Id = user.user_Id;
                     let pseudo = user.pseudo;
                     let class_Selected = user.class;
 
                     let data = {
+                        user_Id: user_Id,
                         pseudo: pseudo,
                         class: class_Selected
                     }
@@ -69,12 +71,14 @@ function userConnexion(event)
                if(user.user_Type == 'prof')
                {
                    let token = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+                   let user_Id = user.user_Id;
                    let pseudo = user.pseudo;
                    let class_Selected = user.class;
 
                    let data = {
-                       pseudo: pseudo,
-                       class: class_Selected
+                        user_Id: user_Id,
+                        pseudo: pseudo,
+                        class: class_Selected
                    }
 
                    localStorage.setItem('token', token);

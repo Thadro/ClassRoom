@@ -52,12 +52,8 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
                             <td>
                                 <form class="report-form">
                                     <input type="hidden" value=${user.user_Id}  />
-                                    <select>
-                                        <option value="23-04-2020">23/04/2020</option>
-                                        <option value="24-04-2020">24/04/2020</option>
-                                        <option value="25-04-2020">25/04/2020</option>
-                                        <option value="26-04-2020">26/04/2020</option>
-                                        <option value="27-04-2020">27/04/2020</option>
+                                    <select class="date-select-bar">
+
                                     </select>
 
                                     <div class="radio-container">
@@ -81,6 +77,24 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
         });
 
     }, 500);
+})
+
+database.ref('classroom/' +class_Selected).on('value', function(snapshot){
+
+    $('.date-select-bar').empty();
+
+    let content = '';
+
+    snapshot.forEach(function(item){
+
+        const classroom = item.val();
+
+        option_Value = classroom.date+ '-' +classroom.hour;
+
+        content += `<option value=${option_Value}>${classroom.date}</option>`;
+    });
+
+    $('.date-select-bar').append(content);
 })
 
 function onReportStudent(event)
