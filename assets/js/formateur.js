@@ -52,7 +52,7 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
                             <td>
                                 <form class="report-form">
                                     <input type="hidden" value=${user.user_Id}  />
-                                    <select>
+                                    <select class='date-select-bar'>
                                         <option value="23-04-2020">23/04/2020</option>
                                         <option value="24-04-2020">24/04/2020</option>
                                         <option value="25-04-2020">25/04/2020</option>
@@ -164,4 +164,20 @@ $('#planning-section-title').click(function(){
     $('#planning-section-title').css("height", "50px");
     $('#classroom-section').css("display", "none");
     $('#planning-section').css("display", "block");
+})
+
+
+//Coloration bouton
+$('#btn-logout').mouseenter(function(){
+    $('#btn-logout > a').css({
+        'color' : '#eb2a5c',
+        transitionDuration: '0.5s'
+    })
+})
+
+$('#btn-logout').mouseleave(function(){
+    $('#btn-logout > a').css({
+        'color' : '#F7F7F2',
+        transitionDuration: '0.5s'
+    })
 })
