@@ -52,17 +52,9 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
                             <td>
                                 <form class="report-form">
                                     <input type="hidden" value=${user.user_Id}  />
-<<<<<<< HEAD
-                                    <select class="date-select-bar">
 
-=======
                                     <select class='date-select-bar'>
-                                        <option value="23-04-2020">23/04/2020</option>
-                                        <option value="24-04-2020">24/04/2020</option>
-                                        <option value="25-04-2020">25/04/2020</option>
-                                        <option value="26-04-2020">26/04/2020</option>
-                                        <option value="27-04-2020">27/04/2020</option>
->>>>>>> bd636247a796ff49395b9f8266268a413768da51
+                                
                                     </select>
 
                                     <div class="radio-container">
