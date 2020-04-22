@@ -10,13 +10,15 @@ var firebaseConfig = {
     appId: "1:613309391988:web:87116cee59aff788fe5d21"
   };
 
+
+//Partie 1: Initialisation des données
 // Initialisation Firebase
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
 
 let token = localStorage.getItem('token');
-console.log(token);
+
 
 //Affichage du pseudo et récupération de la classe
 database.ref('user-connected/' +token).on('value', function(snapshot){
@@ -31,6 +33,10 @@ database.ref('user-connected/' +token).on('value', function(snapshot){
     })
 });
 
+
+
+
+//Partie 2: Gestion du tableau des élèves
 let class_Selected = localStorage.getItem('class');
 
 //Affichage du tableau des élèves
@@ -44,7 +50,6 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
 
             const user = item.val();
 
-            //Afin d'éviter que la boucle affiche 'undefined' en lisant l'entrée class_Name
             content += `<tr>
                             <td>${user.name}</td>
                             <td>${user.tel}</td>
@@ -52,17 +57,10 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
                             <td>
                                 <form class="report-form">
                                     <input type="hidden" value=${user.user_Id}  />
-<<<<<<< HEAD
+                                    <input type="hidden" value=${user.name} />
+
                                     <select class="date-select-bar">
 
-=======
-                                    <select class='date-select-bar'>
-                                        <option value="23-04-2020">23/04/2020</option>
-                                        <option value="24-04-2020">24/04/2020</option>
-                                        <option value="25-04-2020">25/04/2020</option>
-                                        <option value="26-04-2020">26/04/2020</option>
-                                        <option value="27-04-2020">27/04/2020</option>
->>>>>>> bd636247a796ff49395b9f8266268a413768da51
                                     </select>
 
                                     <div class="radio-container">
@@ -80,6 +78,8 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
     //Gestionnaire d'évenement pour le systeme d'abscence et retard.
     //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery.
     setTimeout(() => {
+        showDate();
+
         $('.report-form').click(function(){
             $(this).attr('id', 'report-form-target');
             setTimeout(() => $('#report-form-target').on('submit', onReportStudent), 500);
@@ -88,51 +88,72 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
     }, 500);
 })
 
-database.ref('classroom/' +class_Selected).on('value', function(snapshot){
 
-    $('.date-select-bar').empty();
+/*Fonction 1: Permet d'inscrire les dates dans la select-bar du formulaire (ceci permet de signaler 
+les abscences ou retards uniquement sur les cours ayant étè défini au préalable)*/
+function showDate()
+{
+    database.ref('classroom/' +class_Selected).on('value', function(snapshot){
 
-    let content = '';
+        $('.date-select-bar').empty();
+    
+        let content = '';
+    
+        snapshot.forEach(function(item){
+    
+            const classroom = item.val();
+    
+            option_Value = classroom.date+ '-' +classroom.hour;
+    
+            content += `<option value=${option_Value}>${classroom.date}</option>`;
+        });
+    
+        $('.date-select-bar').append(content);
+    })
+}
 
-    snapshot.forEach(function(item){
 
-        const classroom = item.val();
-
-        option_Value = classroom.date+ '-' +classroom.hour;
-
-        content += `<option value=${option_Value}>${classroom.date}</option>`;
-    });
-
-    $('.date-select-bar').append(content);
-})
-
+//Fonction 2: Permet d'enregistrer les abscences et retard d'un élève dans la base de données
 function onReportStudent(event)
 {
     event.preventDefault();
 
     let report_Id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    let student_Selected = $("#report-form-target > input[type='hidden']").val();
+    let student_Selected = $("#report-form-target > input[type='hidden']:nth-child(1)").val();
+    let student_name = $("#report-form-target > input[type='hidden']:nth-child(2)").val();
     let date = $('#report-form-target > select').val();
     let report_Type = $("#report-form-target > .radio-container > input[name='report']:checked").val();
 
-    let data = {
-        date
+    let data_Class = {
+        student_Name: student_name,
+        date: date,
+        student_Id: student_Selected,
+    }
+
+    let data_Student = {
+        date: date
     }
 
     if(report_Type == 'late')
     {
-        database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/retard/' +report_Id).set(data);
+        database.ref('class/' +class_Selected+ '/report-list/retard/' +report_Id).set(data_Class);
+        database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/retard/' +report_Id).set(data_Student);
     }
 
     else if(report_Type == "absent")
     {
-        database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/absence/' +report_Id).set(data);
+        database.ref('class/' +class_Selected+ '/report-list/absence/' +report_Id).set(data_Class);
+        database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/absence/' +report_Id).set(data_Student);
     }
 
     $('#report-form-target').removeAttr('id'); 
 }
 
-//Affichage du planning
+
+
+
+//Partie 3: Gestion du planning
+//Affichage des cours en fonction de la classe du formateur
 database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
 
     $('.tab-cell-hour').css('background-color', '#f1f1f1');
@@ -165,6 +186,66 @@ database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
 
 })
 
+
+
+
+//Partie 4: Gestion du tableau des absence et retard
+database.ref('class/' +class_Selected+ '/report-list/absence').on('value', function(snapshot) {
+    
+    $('#student-absente').empty();
+
+    let content = '';
+
+        snapshot.forEach(function(item) {
+
+            const user = item.val();
+
+            content += `<tr>
+                            <td><button id=${user.student_Id} class='delete-user-button'><i class="fas fa-times"></i></button>Absence</td>
+                            <td>${user.student_Name}</td>
+                            <td>${user.date}</td>
+                        </tr>`;
+        });
+
+    $('#student-absente').append(content);
+
+    //Gestionnaire d'évenement pour le systeme d'abscence et retard.
+    //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery.
+    setTimeout(() => {
+
+    }, 500);
+})
+
+database.ref('class/' +class_Selected+ '/report-list/retard').on('value', function(snapshot) {
+    
+    $('#student-late').empty();
+
+    let content = '';
+
+        snapshot.forEach(function(item) {
+
+            const user = item.val();
+
+            content += `<tr>
+                            <td><button id=${user.student_Id} class='delete-user-button'><i class="fas fa-times"></i></button>Retard</td>
+                            <td>${user.student_Name}</td>
+                            <td>${user.date}</td>
+                        </tr>`;
+        });
+
+    $('#student-late').append(content);
+
+    //Gestionnaire d'évenement pour le systeme d'abscence et retard.
+    //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery.
+    setTimeout(() => {
+        //A développer: fonction permettant de supprimer les absences dans la base de données
+    }, 500);
+})
+
+
+
+
+//Partie 5: Fonctions complémentaires: déconnexion, router, mise en forme...
 //Deconnexion de l'utilisateur
 $('#btn-logout').click(function(){
     database.ref('user-connected/' +token).set(null);
@@ -173,20 +254,39 @@ $('#btn-logout').click(function(){
     self.location.href = 'index.html';
 })
 
+
+//Gestion du router
 //Affichage tableau des élèves
 $('#classroom-section-title').click(function(){
     $('#classroom-section-title').css("height", "50px");
     $('#planning-section-title').css("height", "35px");
+    $('#report-section-title').css("height", "35px");
+
     $('#classroom-section').css("display", "block");
     $('#planning-section').css("display", "none");
+    $('#report-section').css("display", "none");
 })
 
 //Affichage tableau planning
 $('#planning-section-title').click(function(){
     $('#classroom-section-title').css("height", "35px");
     $('#planning-section-title').css("height", "50px");
+    $('#report-section-title').css("height", "35px");
+
     $('#classroom-section').css("display", "none");
     $('#planning-section').css("display", "block");
+    $('#report-section').css("display", "none");
+})
+
+//Affichage tableau abscence et retard
+$('#report-section-title').click(function(){
+    $('#classroom-section-title').css("height", "35px");
+    $('#planning-section-title').css("height", "35px");
+    $('#report-section-title').css("height", "50px");
+
+    $('#classroom-section').css("display", "none");
+    $('#planning-section').css("display", "none");
+    $('#report-section').css("display", "block");
 })
 
 

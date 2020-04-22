@@ -115,28 +115,20 @@ nav > div{
 
 #classroom-section-title{
     height: 50px;
+}
+
+#planning-section-title, #report-section-title{
+    height: 35px;
+}
+
+#classroom-section-title, #planning-section-title, #report-section-title{
     background-color: #f1f1f1;
     color: #2d314e;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
 
-#classroom-section-title:hover{
-    cursor:pointer;
-    background-color: #2d314e;
-    color: #eb2a5c;
-    transition-duration: 0.5s;
-}
-
-
-#planning-section-title{
-    background-color: #f1f1f1;
-    color: #2d314e;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-
-#planning-section-title:hover{
+#classroom-section-title:hover, #planning-section-title:hover, #report-section-title:hover{
     cursor:pointer;
     background-color: #2d314e;
     color: #eb2a5c;

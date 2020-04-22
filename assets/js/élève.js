@@ -16,7 +16,6 @@ firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
 let token = localStorage.getItem('token');
-console.log(token);
 
 //Affichage du pseudo et récupération de la classe
 database.ref('user-connected/' +token).on('value', function(snapshot){
