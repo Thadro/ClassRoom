@@ -60,7 +60,7 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
                                     <input type="hidden" value=${user.name} />
 
                                     <select class="date-select-bar">
-
+                                
                                     </select>
 
                                     <div class="radio-container">
