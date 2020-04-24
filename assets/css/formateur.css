@@ -179,6 +179,22 @@ td{
     padding-bottom: 10px;
 }
 
+.delete-user-button{
+    background-color: #F1F1F1;
+    width: 40px;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+.delete-user-button:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
+
 .radio-container{
     margin-top: 10px;
     margin-bottom: 20px;

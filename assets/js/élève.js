@@ -97,12 +97,12 @@ database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-li
         if(late.date.indexOf('day') != -1)
         {
             let date_Target = late.date.replace('-day', '');
-            $(`td[class*=${date_Target}]`).css('background-color', 'red');
+            $(`td[class*=${date_Target}]`).css('background-color', '#eb2a5c');
         }
 
         else
         {
-           $(`td[class*=${late.date}]`).css('background-color', 'red');
+           $(`td[class*=${late.date}]`).css('background-color', '#eb2a5c');
         }
 
     });
