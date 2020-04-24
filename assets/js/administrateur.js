@@ -173,8 +173,8 @@ function showUser(class_Selected)
         setTimeout(() => {
             
             $('.delete-user-button').click(function(){
-                $(this).attr('class', 'delete-user-button-target')
-                onDeleteUser()
+                $(this).attr('class', 'delete-user-button-target');
+                onDeleteUser();
             })
 
             $('.modif-form').click(function(){
@@ -456,7 +456,6 @@ function onModifUser(event)
 //Fonction 10: Permet de supprimer un utilisateur de la base de donnée
 function onDeleteUser()
 {
-
     let user_Selected = $('.delete-user-button-target').attr('id')
 
     database.ref('class/' +class_Selected+ '/student-list/' +user_Selected).set(null);

@@ -8,7 +8,7 @@ var firebaseConfig = {
     storageBucket: "project-classroom-c1da1.appspot.com",
     messagingSenderId: "613309391988",
     appId: "1:613309391988:web:87116cee59aff788fe5d21"
-  };
+};
 
 
 //Partie 1: Initialisation des données
@@ -49,6 +49,7 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
         snapshot.forEach(function(item) {
 
             const user = item.val();
+            let user_Name = user.name.replace(' ', '-')
 
             content += `<tr>
                             <td>${user.name}</td>
@@ -57,7 +58,7 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
                             <td>
                                 <form class="report-form">
                                     <input type="hidden" value=${user.user_Id}  />
-                                    <input type="hidden" value=${user.name} />
+                                    <input type="hidden" value=${user_Name} />
 
                                     <select class="date-select-bar">
                                 
@@ -120,14 +121,15 @@ function onReportStudent(event)
 
     let report_Id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     let student_Selected = $("#report-form-target > input[type='hidden']:nth-child(1)").val();
-    let student_name = $("#report-form-target > input[type='hidden']:nth-child(2)").val();
+    let student_Name = $("#report-form-target > input[type='hidden']:nth-child(2)").val();
     let date = $('#report-form-target > select').val();
     let report_Type = $("#report-form-target > .radio-container > input[name='report']:checked").val();
 
     let data_Class = {
-        student_Name: student_name,
+        student_Name: student_Name,
         date: date,
-        student_Id: student_Selected,
+        report_Id: report_Id,
+        student_Id: student_Selected
     }
 
     let data_Student = {
@@ -190,6 +192,7 @@ database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
 
 
 //Partie 4: Gestion du tableau des absence et retard
+//Affichage des absences
 database.ref('class/' +class_Selected+ '/report-list/absence').on('value', function(snapshot) {
     
     $('#student-absente').empty();
@@ -199,11 +202,12 @@ database.ref('class/' +class_Selected+ '/report-list/absence').on('value', funct
         snapshot.forEach(function(item) {
 
             const user = item.val();
+            let date = user.date.slice(0, 8);
 
             content += `<tr>
-                            <td><button id=${user.student_Id} class='delete-user-button'><i class="fas fa-times"></i></button>Absence</td>
+                            <td><button id=${user.report_Id} class="delete-absente-button" type="submit"><i class="fas fa-times"></i></button>Absence</td>
                             <td>${user.student_Name}</td>
-                            <td>${user.date}</td>
+                            <td>${date}</td>
                         </tr>`;
         });
 
@@ -212,10 +216,24 @@ database.ref('class/' +class_Selected+ '/report-list/absence').on('value', funct
     //Gestionnaire d'évenement pour le systeme d'abscence et retard.
     //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery.
     setTimeout(() => {
-
+        $('.delete-absente-button').click(function(){
+            $(this).attr('class', 'delete-absente-button-target');
+            onDeleteAbsent();
+        });
     }, 500);
 })
 
+//Fonction 3: Permet de supprimer une absence de la base de donnée (EN DEVELOPPEMENT)
+function onDeleteAbsent()
+{
+    let report_Selected = $('.delete-absente-button-target').attr('id');
+
+    database.ref('class/' +class_Selected+ '/report-list/absence/' +report_Selected).set(null);
+    // database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/absence' +report_Selected).set(null);
+}
+
+
+//Affichage des retards
 database.ref('class/' +class_Selected+ '/report-list/retard').on('value', function(snapshot) {
     
     $('#student-late').empty();
@@ -225,11 +243,12 @@ database.ref('class/' +class_Selected+ '/report-list/retard').on('value', functi
         snapshot.forEach(function(item) {
 
             const user = item.val();
+            let date = user.date.slice(0, 8);
 
             content += `<tr>
-                            <td><button id=${user.student_Id} class='delete-user-button'><i class="fas fa-times"></i></button>Retard</td>
+                            <td><button id=${user.report_Id} class="delete-late-button" type="submit"><i class="fas fa-times"></i></button>Retard</td>
                             <td>${user.student_Name}</td>
-                            <td>${user.date}</td>
+                            <td>${date}</td>
                         </tr>`;
         });
 
@@ -238,9 +257,22 @@ database.ref('class/' +class_Selected+ '/report-list/retard').on('value', functi
     //Gestionnaire d'évenement pour le systeme d'abscence et retard.
     //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery.
     setTimeout(() => {
-        //A développer: fonction permettant de supprimer les absences dans la base de données
+        $('.delete-late-button').click(function(){
+            $(this).attr('class', 'delete-late-button-target');
+            onDeleteLate();
+        });
     }, 500);
 })
+
+//Fonction 4: Permet de supprimer un retard de la base de donnée (EN DEVELOPPEMENT)
+function onDeleteLate()
+{   
+    let report_Selected = $('.delete-late-button-target').attr('id');
+    console.log(report_Selected);
+
+    database.ref('class/' +class_Selected+ '/report-list/retard/' +report_Selected).set(null);
+    // database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/absence' +report_Selected).set(null);
+}
 
 
 
