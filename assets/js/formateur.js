@@ -205,7 +205,7 @@ database.ref('class/' +class_Selected+ '/report-list/absence').on('value', funct
             let date = user.date.slice(0, 8);
 
             content += `<tr>
-                            <td><button id=${user.report_Id} class="delete-absente-button" type="submit"><i class="fas fa-times"></i></button>Absence</td>
+                            <td><button id=${user.report_Id} class="delete-absente-button" type="submit"><i class="fas fa-times"></i></button><span style="display: none">${user.student_Id}</span>Absence</td>
                             <td>${user.student_Name}</td>
                             <td>${date}</td>
                         </tr>`;
@@ -227,9 +227,10 @@ database.ref('class/' +class_Selected+ '/report-list/absence').on('value', funct
 function onDeleteAbsent()
 {
     let report_Selected = $('.delete-absente-button-target').attr('id');
+    let student_Selected = $('.delete-absente-button-target + span').text();
 
     database.ref('class/' +class_Selected+ '/report-list/absence/' +report_Selected).set(null);
-    // database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/absence' +report_Selected).set(null);
+    database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/absence/' +report_Selected).set(null);
 }
 
 
@@ -246,7 +247,7 @@ database.ref('class/' +class_Selected+ '/report-list/retard').on('value', functi
             let date = user.date.slice(0, 8);
 
             content += `<tr>
-                            <td><button id=${user.report_Id} class="delete-late-button" type="submit"><i class="fas fa-times"></i></button>Retard</td>
+                            <td><button id=${user.report_Id} class="delete-late-button" type="submit"><i class="fas fa-times"></i></button><span style="display: none">${user.student_Id}</span>Retard</td>
                             <td>${user.student_Name}</td>
                             <td>${date}</td>
                         </tr>`;
@@ -268,10 +269,10 @@ database.ref('class/' +class_Selected+ '/report-list/retard').on('value', functi
 function onDeleteLate()
 {   
     let report_Selected = $('.delete-late-button-target').attr('id');
-    console.log(report_Selected);
+    let student_Selected = $('.delete-late-button-target + span').text();
 
     database.ref('class/' +class_Selected+ '/report-list/retard/' +report_Selected).set(null);
-    // database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/absence' +report_Selected).set(null);
+    database.ref('class/' +class_Selected+ '/student-list/' +student_Selected+ '/report-list/retard/' +report_Selected).set(null);
 }
 
 
