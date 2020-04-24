@@ -70,6 +70,8 @@ let student_Id = localStorage.getItem('id');
 //Affichage des abscence et retard
 database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-list/retard/').on('value', function(snapshot){
     
+    let count = 0;
+
     snapshot.forEach(function(item){
         
         const late = item.val();
@@ -77,19 +79,28 @@ database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-li
         if(late.date.indexOf('day') != -1)
         {
             let date_Target = late.date.replace('-day', '');
-            $(`td[class*=${date_Target}]`).css('background-color', 'orange');
+            $(`td[class*=${date_Target}]`).append('<i class="fas fa-user-clock"></i>')
+            $(`td[class*=${date_Target}]`).css('background-color', 'rgba(245, 92, 0, 0.5)');
         }
 
         else
         {
-           $(`td[class*=${late.date}]`).css('background-color', 'orange');
+            $(`td[class*=${late.date}]`).append('<i class="fas fa-user-clock"></i>')
+            $(`td[class*=${late.date}]`).css('background-color', 'rgba(245, 92, 0, 0.5)');
         }
 
-    });
+        count++;
+
+    });  
+
+    $('#number-abs').append(parseInt(count) + ' absence(s)');
+
 })
 
 database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-list/absence/').on('value', function(snapshot){
     
+    let count = 0;
+
     snapshot.forEach(function(item){
         
         const late = item.val();
@@ -97,15 +108,22 @@ database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-li
         if(late.date.indexOf('day') != -1)
         {
             let date_Target = late.date.replace('-day', '');
-            $(`td[class*=${date_Target}]`).css('background-color', 'red');
+            $(`td[class*=${date_Target}]`).append('<i class="fas fa-user-times"></i>');
+            $(`td[class*=${date_Target}]`).css('background-color','rgba(221, 35, 40, 0.6)' );
         }
 
         else
         {
-           $(`td[class*=${late.date}]`).css('background-color', 'red');
+            $(`td[class*=${late.date}]`).append('<i class="fas fa-user-times"></i>');
+            $(`td[class*=${late.date}]`).css('background-color', 'rgba(221, 35, 40, 0.6)' );        
         }
 
+        count++
+
     });
+
+    $('#number-rtd').append(parseInt(count) + ' retard(s)');
+
 })
 
 //Deconnexion de l'utilisateur

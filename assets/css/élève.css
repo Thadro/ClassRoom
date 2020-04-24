@@ -83,6 +83,7 @@ header{
     display: flex;
     align-items: center;
     justify-content: center;
+    margin-right: 3%;
 }
 
 #body-title-ctnr h1{
@@ -90,6 +91,11 @@ header{
     color: #2d314e;
     margin-top: 30px;
     font-family: 'Gudea Bolt';
+}
+
+#cunt-ctnr{
+    margin-left: 35%;
+    margin-top: 45px;
 }
 
 /* Bouton classe et planning */
