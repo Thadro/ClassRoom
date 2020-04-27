@@ -100,7 +100,7 @@ nav{
     display: flex;
     align-items: flex-end;
     margin-left: 1.1%;
-    margin-bottom: 0.5%;
+    margin-bottom: -40px;
     margin-top: 5%;
 }
 
@@ -352,7 +352,37 @@ td{
     margin-bottom: 10%;
 }
 
+#previous-date{
+    background-color: #F1F1F1;
+    width: auto;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
 
+#previous-date:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
+
+#next-date{
+    background-color: #F1F1F1;
+    width: auto;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+#next-date:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
 
 
 /* Partie 3: Section de bas de page: (Formulaire choix de classe et ajout d'utilisateur) */
@@ -826,7 +856,7 @@ h4[id*="error-title"]
     display:flex;
     justify-content: space-between;
     margin-top: -8%;
-    margin-bottom: 5.5%;
+    margin-bottom: 127px;
 }
 
 #planning-button-container > button:nth-child(1)
