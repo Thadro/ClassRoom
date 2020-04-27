@@ -254,3 +254,35 @@ td{
     flex-direction: column;
     align-items: center;
 }
+
+.delete-late-button{
+    background-color: #F1F1F1;
+    width: 40px;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+.delete-late-button:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
+
+.delete-absente-button{
+    background-color: #F1F1F1;
+    width: 40px;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+.delete-absente-button:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
