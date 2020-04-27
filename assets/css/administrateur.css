@@ -100,7 +100,7 @@ nav{
     display: flex;
     align-items: flex-end;
     margin-left: 1.1%;
-    margin-bottom: -2%;
+    margin-bottom: 0.5%;
     margin-top: 5%;
 }
 
@@ -577,7 +577,6 @@ h4[id*="error-title"]
     margin-bottom: 15px;
 }
 
-/* Dropdown button on hover & focus */
 .dropbtn-professeur > p{
     text-decoration: none;
     color: #F7F7F2;
@@ -591,7 +590,6 @@ h4[id*="error-title"]
     cursor: pointer;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content-professeur 
 {
     display: none;
@@ -706,7 +704,6 @@ h4[id*="error-title"]
     cursor: pointer;
 }
 
-/* Dropdown Content (Hidden by Default) */
 .dropdown-content 
 {
     display: none;
@@ -717,7 +714,6 @@ h4[id*="error-title"]
     width: 200%;
 }
 
-/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show 
 {
     display:block;
@@ -825,6 +821,24 @@ h4[id*="error-title"]
 }
 
 /* Section planning */
+#planning-button-container
+{
+    display:flex;
+    justify-content: space-between;
+    margin-top: -8%;
+    margin-bottom: 5.5%;
+}
+
+#planning-button-container > button:nth-child(1)
+{
+    margin-left: 3%;
+}
+
+#planning-button-container > button:nth-child(2)
+{
+    margin-right: 3%;
+}
+
 #planning-bottom-section
 {
     display: flex;

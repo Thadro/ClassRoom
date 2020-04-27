@@ -93,7 +93,7 @@ database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-li
 
     });  
 
-    $('#number-abs').append(parseInt(count) + ' absence(s)');
+    $('#number-abs').append(parseInt(count) + ' retard(s)');
 
 })
 
@@ -122,7 +122,7 @@ database.ref('class/' +class_Selected+ '/student-list/' +student_Id+ '/report-li
 
     });
 
-    $('#number-rtd').append(parseInt(count) + ' retard(s)');
+    $('#number-rtd').append(parseInt(count) + ' absence(s) <span style="color: black">injustifiée(s)</span>');
 
 })
 

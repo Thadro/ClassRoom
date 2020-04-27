@@ -58,7 +58,7 @@ database.ref('class/').on('value', function(snapshot)
 
             showTeacher(class_Selected);
             showUser(class_Selected);
-            showPlanning(class_Selected);
+            showCLassroom(class_Selected);
         });
 
         $('.delete-class-button').click(function(){
@@ -489,8 +489,288 @@ function dropDownFunctionCours()
 
 
 //PARTIE PLANNING
+//Gestion des dates
+let day = 1;
+let month = 1;
+let year = 20;
+
+showPlanning();
+
+$('#previous-date').click(()=>previousDate());
+
+function previousDate()
+{
+    let day_Test = day;
+    let month_Test = month;
+
+    if(day_Test > 7)
+            day_Test -= 7;
+
+    else
+    {
+        if(day_Test == 1)
+            day_Test = 0;
+
+        day_Test = 30 + (day_Test - 7);
+        month_Test--;
+    }
+
+    if(month_Test > 0)
+    {
+        if(day > 7)
+            day -= 7;
+
+        else
+        {
+            if(day == 1)
+                day = 0;
+
+            day = 30 + (day - 7);
+            month--;
+        }
+
+        showPlanning();
+    }
+}
+
+$('#next-date').click(()=>nextDate());
+
+function nextDate()
+{
+    let day_Test = day;
+    let month_Test = month;
+
+    if(day_Test < 23)
+            day_Test += 7;
+
+    else
+    {
+        day_Test = 7 + (day_Test - 30);
+
+        if(day_Test == 0)
+            day_Test = 1;
+
+        month_Test++;
+    }
+
+    if(month_Test < 13)
+    {
+        if(day < 23)
+            day += 7;
+
+        else
+        {
+            day = 7 + (day - 30);
+
+            if(day == 0)
+                day = 1;
+
+            month++;
+        }
+    
+        showPlanning();
+    }
+}
+
+//Fonction 11: Permet d'afficher le planning
+function showPlanning()
+{
+    $('#planning').empty();
+
+    let date_Target = [];
+
+    for(let i = 0; i < 7; i++)
+    {
+        if(day+i <= 30)
+        {
+            if(day+i < 10)
+                date_Target.push('0' +parseInt(day+i)+ '/0' +parseInt(month)+ '/' +parseInt(year));
+
+            else
+                date_Target.push(parseInt(day+i)+ '/0' +parseInt(month)+ '/' +parseInt(year));
+        }
+
+        else
+        {
+            date_Target.push('0' +parseInt(day + i - 30)+ '/0' +parseInt(month)+ '/' +parseInt(year));
+        }
+    }
+
+    let td_Morning_CLass = [];
+
+    for(let i = 0; i < 7; i++)
+    {
+        if(day+i <= 30)
+        {
+            if(day+i < 10)
+                td_Morning_CLass.push('0' +parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-morning');
+
+            else
+                td_Morning_CLass.push(parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-morning');
+        }
+
+        else
+        {
+            td_Morning_CLass.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-morning');
+        }
+    }
+
+    let td_Afternoon_Class = [];
+
+    for(let i = 0; i < 7; i++)
+    {
+        if(day+i <= 30)
+        {
+            if(day+i < 10)
+                td_Afternoon_Class.push('0' +parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-afternoon');
+
+            else
+                td_Afternoon_Class.push(parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-afternoon');
+        }
+
+        else
+        {
+            td_Afternoon_Class.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-afternoon');
+        }
+    }
+
+    let content = '';
+
+    content += `<thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>${date_Target[0]}</th>
+                        <th>${date_Target[1]}</th>
+                        <th>${date_Target[2]}</th>
+                        <th>${date_Target[3]}</th>
+                        <th>${date_Target[4]}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>9H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>10H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>11H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>12H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>13H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>14H</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>15H</td>
+                        <td class="${td_Afternoon_Class[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>16H</td>
+                        <td class="${td_Afternoon_Class[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>17H</td>
+                        <td class="${td_Afternoon_Class[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                </tbody>`
+
+    $('#planning').append(content);
+
+    let date_Selected = [];
+
+    for(let i = 0; i < 7; i++)
+    {
+        if(day+i <= 30)
+        {
+            if(day+i < 10)
+                date_Selected.push('0' +parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year));
+
+            else
+                date_Selected.push(parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year));
+        }
+
+        else
+        {
+            date_Selected.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month)+ '-' +parseInt(year));
+        }
+    }
+
+    $('#date-selected').empty();
+
+    content = `
+                <option value=${date_Selected[0]}>${date_Target[0]}</option>
+                <option value=${date_Selected[1]}>${date_Target[1]}</option>
+                <option value=${date_Selected[2]}>${date_Target[2]}</option>
+                <option value=${date_Selected[3]}>${date_Target[3]}</option>
+                <option value=${date_Selected[4]}>${date_Target[4]}</option>`
+
+    $('#date-selected').append(content);
+
+    setTimeout(() => {
+        showCLassroom(class_Selected);
+    }, 500);
+
+}
+
 //Fonction 11: Permet d'afficher les cours en fonctions des classes
-function showPlanning(class_Selected)
+function showCLassroom(class_Selected)
 {
     database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
 
@@ -565,6 +845,8 @@ function onAddClassroom(event)
     }
 
     database.ref('classroom/' +class_Selected+ '/' +classroom_Id).set(data);
+
+    showPlanning();
 }
 
 //Fonction 13: Permet de suprimer un cour de la base de donnée
@@ -574,6 +856,8 @@ function onDeleteCLassroom()
 
     //Suppression de la classe ainsi que des données élèves qu'elle contient
     database.ref('classroom/' +class_Selected+ '/' +classroom_Target).set(null);
+
+    showPlanning();
 }
 
 
