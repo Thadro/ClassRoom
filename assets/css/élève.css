@@ -93,9 +93,15 @@ header{
     font-family: 'Gudea Bolt';
 }
 
-#cunt-ctnr{
-    margin-left: 35%;
-    margin-top: 45px;
+#count-ctnr{
+    margin-top: 31px;
+    margin-bottom: 10%;
+    margin-left: 30%;
+}
+
+#count-ctnr > span{
+    font-size: 1.2em;
+    font-weight: bold;
 }
 
 /* Bouton classe et planning */
@@ -142,6 +148,24 @@ nav > div > h3 > svg{
 
 /* Partie 2: Section centrale (tableau classe et planning) */
 /* Tableau centrale (style commun aux deux tableaux) */
+
+#planning-button-container
+{
+    display:flex;
+    justify-content: space-between;
+    margin-top: -8%;
+    margin-bottom: 5.5%;
+}
+
+#planning-button-container > button:nth-child(1)
+{
+    margin-left: 3%;
+}
+
+#planning-button-container > button:nth-child(2)
+{
+    margin-right: 3%;
+}
 
 table{
     width: 98%;
