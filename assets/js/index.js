@@ -62,6 +62,9 @@ function userConnexion(event)
                     }
 
                     localStorage.setItem('token', token);
+                    localStorage.setItem('class', class_Selected);
+                    localStorage.setItem('pseudo', pseudo);
+                    localStorage.setItem('id', user_Id);
 
                     database.ref('user-connected/' +token+ '/data').set(data);
 
@@ -82,6 +85,8 @@ function userConnexion(event)
                    }
 
                    localStorage.setItem('token', token);
+                   localStorage.setItem('class', class_Selected);
+                   localStorage.setItem('pseudo', pseudo);
 
                     database.ref('user-connected/' +token+ '/data').set(data);
 

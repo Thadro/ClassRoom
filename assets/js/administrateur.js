@@ -8,19 +8,18 @@ var firebaseConfig = {
     storageBucket: "project-classroom-c1da1.appspot.com",
     messagingSenderId: "613309391988",
     appId: "1:613309391988:web:87116cee59aff788fe5d21"
-  };
+};
+
 // Initialisation Firebase
 firebase.initializeApp(firebaseConfig);
 
 const database = firebase.database();
 
-//Montrer la liste des classe
 //PARTIE CLASSE
-
-//Partie 1: Initialisation de l'interface: affichage des données
+//Partie 1: Initialisation de l'interface et affichage des données
 let class_Selected = "";
 
-//Montrer la liste des classe
+//Affichage de la liste des classes
 database.ref('class/').on('value', function(snapshot) 
 {
     $('#dropdown-list').empty();
@@ -44,23 +43,31 @@ database.ref('class/').on('value', function(snapshot)
     $('#dropdown-list').append(content);
     $('#planning-dropdown-list').append(content);
 
-   //Selection manuel de la classe (click sur le dropdown)
+   //Gestionnaire d'évenement: Selection de la classe
     setTimeout(() => {
         $('.list-item-title').click(function(){
+            /*On récupère la classe selectionner lors du click dans un variable et on affiche son nom 
+            sur la page*/
             class_Selected = $(this).text();
+
             $('#dropdown-title-class').empty();
             $('#dropdown-title-class').append(class_Selected);
+
             $('#dropdown-title-class-planning').empty();
             $('#dropdown-title-class-planning').append(class_Selected);
+
             $('#class-title').empty();
             $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>' +class_Selected);
 
 
+            /*On appelle les differentes fonctions permettant d'afficher les données 
+            de la classe: formateur, élève, cours*/
             showTeacher(class_Selected);
-            showUser(class_Selected);
+            showStudent(class_Selected);
             showCLassroom(class_Selected);
         });
 
+        //Gestionnaire d'évenement: suppression de la classe
         $('.delete-class-button').click(function(){
             $(this).attr('class', 'delete-class-button-target');
             onDeleteClass();
@@ -82,7 +89,6 @@ function showTeacher(class_Selected)
 
             const user = item.val();
 
-            //Afin d'éviter que la boucle affiche 'undefined' en lisant l'entrée class_Name
             content += `<tr>
                             <td>Prof</td>
                             <td>
@@ -108,6 +114,7 @@ function showTeacher(class_Selected)
 
         $('#teacher').append(content);
 
+        //Gestionnaire d'evenement: modification et suppression des formateurs
         setTimeout(() => {
             
             $('.delete-teacher-button').click(function(){
@@ -125,8 +132,8 @@ function showTeacher(class_Selected)
 }
 
 
-//Fonction 2: Permet de montrer les utilisateurs en fonction de la classe
-function showUser(class_Selected)
+//Fonction 2: Permet de montrer les élèves en fonction de la classe
+function showStudent(class_Selected)
 {
     database.ref('class/' +class_Selected+ '/student-list').on('value', function(snapshot) {
 
@@ -138,7 +145,6 @@ function showUser(class_Selected)
 
             const user = item.val();
 
-            //Afin d'éviter que la boucle affiche 'undefined' en lisant l'entrée class_Name
             content += `<tr>
                             <td>Elève</td>
                             <td>
@@ -168,18 +174,17 @@ function showUser(class_Selected)
 
         $('#student').append(content);
         
-        //Gestionnaire d'évenement pour la suppression et la modification.
-        //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery
+        //Gestionnaire d'événement: modification et suppression d'un élève.
         setTimeout(() => {
             
             $('.delete-user-button').click(function(){
                 $(this).attr('class', 'delete-user-button-target');
-                onDeleteUser();
+                onDeleteStudent();
             })
 
             $('.modif-form').click(function(){
                 $(this).attr('id', 'modif-form-target');
-                setTimeout(() => $('#modif-form-target').on('submit', onModifUser), 500);
+                setTimeout(() => $('#modif-form-target').on('submit', onModifStudent), 500);
             });
   
         }, 500);
@@ -189,9 +194,9 @@ function showUser(class_Selected)
 
 
 
-//Gestion des information de classe, d'élève et de formateur
+//Partie 2: Gestion des information de classe, d'élève et de formateur
 
-//Partie 2: Gestion des classes
+//Partie 2-1: Gestion des classes
 //Fonction 3: Permet d'ajouter une nouvelle classe dans la base de donnée
 $('#new-class-form').on('submit', onAddClass);
 
@@ -217,6 +222,8 @@ function onAddClass(event)
 
 
     database.ref('class/' +new_Class).set({class_Name: new_Class});
+
+    $('#new-class-form')[0].reset();
 }
 
 
@@ -242,7 +249,7 @@ function onDeleteClass()
         $('#class-title').append('<i class="fas fa-chalkboard-teacher"></i>Classe');
     }
 
-    //Supperssion des cours de la class
+    //Supperssion des cours de la classe
     database.ref('classroom/' +class_Target).set(null);
 }
 
@@ -250,7 +257,7 @@ function onDeleteClass()
 
 
 
-// Partie 3: Gestion des formateurs
+// Partie 2-2: Gestion des formateurs
 //Fonction 5: Permet de rajouter un formateur dans la base de donnée
 $('#new-teacher-form').on('submit', onAddTeacher);
 
@@ -273,7 +280,7 @@ function onAddTeacher(event)
 
     //Gestion des cas d'erreur
     
-    //Cas 1: Aucune classe n'a étè sélèctionnée
+    //Cas 1: Aucune classe n'a étè sélèctionnées
     if(class_Selected == "")
     {
         $('#error-title-teacher-form1').css('display', 'block');
@@ -293,21 +300,6 @@ function onAddTeacher(event)
         $('#error-title-teacher-form3').css('display', 'block');
         return;
     }
-
-    //Cas 4: le pseudo ou mots de passe est déjà inscrit dans la base de données (en développement)
-    // database.ref('user-list/').on('value', function(snapshot) {
-    //     snapshot.forEach(function(item) {
-    //         user = item.val();
-
-    //         console.log(user);
-
-    //         if(name == user.name || pseudo == user.pseudo || password == user.password)
-    //         {
-    //             $('#error-title-teacher-form4').css('display', 'block');
-    //             console.log("debug");
-    //         }
-    //     });
-    // });
 
     let data_Teacher = {
         name: name,
@@ -329,6 +321,8 @@ function onAddTeacher(event)
 
     //Liste des utilisateurs utilisé pour l'autentification
     database.ref('user-list/' +teacher_Id).set(data_User);
+
+    $('#new-teacher-form')[0].reset();
 }
 
 
@@ -363,11 +357,11 @@ function onDeleteTeacher()
 
 
 
-//Partie 4: Gestion des élèves
+//Partie 2-3: Gestion des élèves
 //Fonction 8: Permet de rajouter un élève dans la base de donnée
-$('#new-user-form').on('submit', onAddUser);
+$('#new-user-form').on('submit', onAddStudent);
 
-function onAddUser(event)
+function onAddStudent(event)
 {
     event.preventDefault();
 
@@ -433,11 +427,13 @@ function onAddUser(event)
 
     //Liste des utilisateurs utilisé pour l'autentification
     database.ref('user-list/' +user_Id).set(data_User);
+
+    $('#new-user-form')[0].reset();
 }
 
 
-//Fonction 9: Permet de modifier les information d'un utilisateur dans la base de donnée
-function onModifUser(event)
+//Fonction 9: Permet de modifier les information d'un élève dans la base de donnée
+function onModifStudent(event)
 {
     event.preventDefault();
 
@@ -453,8 +449,8 @@ function onModifUser(event)
 }
 
 
-//Fonction 10: Permet de supprimer un utilisateur de la base de donnée
-function onDeleteUser()
+//Fonction 10: Permet de supprimer un élève de la base de donnée
+function onDeleteStudent()
 {
     let user_Selected = $('.delete-user-button-target').attr('id')
 
@@ -465,8 +461,7 @@ function onDeleteUser()
 
 
 
-// Fonctions de Dropdown:
-
+// Fonctions de Dropdown(partie classe):
 //Affichage du formulaire d'ajout d'utilisateur
 function dropDownFunction() 
 {
@@ -479,27 +474,23 @@ function dropDownFunctionProfesseur()
     document.getElementById("myDropdown-professeur").classList.toggle("show-prof-form");
 }
 
-//Affichage du formulaire d'ajout du professeur
-function dropDownFunctionCours() 
-{
-    document.getElementById("myDropdown-cours").classList.toggle("show-cours-form");
-}
-
 
 
 
 //PARTIE PLANNING
-//Gestion des dates
+//Partie 1: Gestion des dates
 let day = 1;
 let month = 1;
 let year = 20;
 
 showPlanning();
 
+//Fonction 1: Permet de retourner à la semaine précédente
 $('#previous-date').click(()=>previousDate());
 
 function previousDate()
 {
+    //Test: cas ou on tente de descendre en dessous du premier mois
     let day_Test = day;
     let month_Test = month;
 
@@ -508,13 +499,14 @@ function previousDate()
 
     else
     {
-        if(day_Test == 1)
-            day_Test = 0;
+        if(day_Test == 0)
+            day_Test = 1;
 
         day_Test = 30 + (day_Test - 7);
         month_Test--;
     }
 
+    //Si on valide le test on effectue les calculs de la date du premier lundi de la semaine précécente
     if(month_Test > 0)
     {
         if(day > 7)
@@ -522,8 +514,8 @@ function previousDate()
 
         else
         {
-            if(day == 1)
-                day = 0;
+            if(day == 0)
+                day = 1;
 
             day = 30 + (day - 7);
             month--;
@@ -533,14 +525,16 @@ function previousDate()
     }
 }
 
+//Fonction 2: Permet d'aller à la semaine suivante
 $('#next-date').click(()=>nextDate());
 
 function nextDate()
 {
+    //Test: cas ou on tente d'aller au dessus du 12ème mois
     let day_Test = day;
     let month_Test = month;
 
-    if(day_Test < 23)
+    if(day_Test <= 23)
             day_Test += 7;
 
     else
@@ -553,9 +547,10 @@ function nextDate()
         month_Test++;
     }
 
+    //Si on valide le test on effectue les calculs de la date du premier lundi de la semaine suivante
     if(month_Test < 13)
     {
-        if(day < 23)
+        if(day <= 23)
             day += 7;
 
         else
@@ -572,13 +567,20 @@ function nextDate()
     }
 }
 
-//Fonction 11: Permet d'afficher le planning
+//Partie 2: Affichage des données
+
+//Partie 2-1: Affichage du planning
+//Fonction 3: Permet d'afficher le planning (et de remplir la select bar du fomulaire des absences et retards)
 function showPlanning()
 {
+    //Partie a: Gestion du planning
     $('#planning').empty();
 
+    //Tableau contenant l'ensemble des dates de la semaine selectionnée
     let date_Target = [];
 
+    /*Principe on déduit à partir de la date du premier lundi la date des autres jours de la semaine qu'on 
+    push dans date_Target*/
     for(let i = 0; i < 7; i++)
     {
         if(day+i <= 30)
@@ -592,10 +594,11 @@ function showPlanning()
 
         else
         {
-            date_Target.push('0' +parseInt(day + i - 30)+ '/0' +parseInt(month)+ '/' +parseInt(year));
+            date_Target.push('0' +parseInt(day + i - 30)+ '/0' +parseInt(month+1)+ '/' +parseInt(year));
         }
     }
 
+    //Tableau contenant l'ensemble des classes des <td> du tableau (matin)
     let td_Morning_CLass = [];
 
     for(let i = 0; i < 7; i++)
@@ -611,10 +614,11 @@ function showPlanning()
 
         else
         {
-            td_Morning_CLass.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-morning');
+            td_Morning_CLass.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month+1)+ '-' +parseInt(year)+ '-morning');
         }
     }
 
+    //Tableau contenant l'ensemble des classes des <td> du tableau (apres-midi)
     let td_Afternoon_Class = [];
 
     for(let i = 0; i < 7; i++)
@@ -630,7 +634,7 @@ function showPlanning()
 
         else
         {
-            td_Afternoon_Class.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-afternoon');
+            td_Afternoon_Class.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month+1)+ '-' +parseInt(year)+ '-afternoon');
         }
     }
 
@@ -733,6 +737,9 @@ function showPlanning()
 
     $('#planning').append(content);
 
+    //Partie b: Gestion de la select bar des absences
+    /*Tableau contenant l'ensemble des values des differentes options de la select bar du formulaire: 
+    absence/retard*/
     let date_Selected = [];
 
     for(let i = 0; i < 7; i++)
@@ -763,13 +770,15 @@ function showPlanning()
 
     $('#date-selected').append(content);
 
+    //Une fois le planning affiché, on appelle la fonction permettant d'afficher les cours
     setTimeout(() => {
         showCLassroom(class_Selected);
     }, 500);
 
 }
 
-//Fonction 11: Permet d'afficher les cours en fonctions des classes
+//Partie 2-2: Affichage des cours
+//Fonction 4: Permet d'afficher les cours en fonctions des classes
 function showCLassroom(class_Selected)
 {
     database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
@@ -810,6 +819,7 @@ function showCLassroom(class_Selected)
             }
         });
 
+        //Gestionnaire d'événement: suppresion d'un cours
         setTimeout(() => {
             $('.delete-classroom-button').click(function(){
                 $(this).attr('class', 'delete-classroom-button-target');
@@ -817,23 +827,36 @@ function showCLassroom(class_Selected)
             });
         });
     })
-
-    //Rajouter la suppression du cour si on rajoute un cour au meme endroit
 }
 
-
-//Fonction 12: Permet d'ajouter un cour dans la base de données 
+//Partie 3: Gestion des données
+//Fonction 5: Permet d'ajouter un cour dans la base de données 
 $('#classroom-form').on('submit', onAddClassroom);
 
 function onAddClassroom(event)
 {
     event.preventDefault();
 
+    $('#error-title-classroom-form1').css('display', 'none');
+    $('#error-title-classroom-form2').css('display', 'none');
+
     let classroom_Id = Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
     let classroom_Name = $('#classroom-name').val();
     let teacher_Name = $('#teacher-name').val();
     let date_Selected = $('#date-selected').val();
     let hour_Selected = $('#hour-select').val();
+
+    if(class_Selected == '')
+    {
+        $('#error-title-classroom-form1').css('display', 'block');
+        return;
+    }
+
+    if(classroom_Name == '' || teacher_Name == '')
+    {
+        $('#error-title-classroom-form2').css('display', 'block');
+        return;
+    }
 
     data = {
         title: classroom_Name,
@@ -846,10 +869,12 @@ function onAddClassroom(event)
 
     database.ref('classroom/' +class_Selected+ '/' +classroom_Id).set(data);
 
+    $('#classroom-form')[0].reset();
+
     showPlanning();
 }
 
-//Fonction 13: Permet de suprimer un cour de la base de donnée
+//Fonction 6: Permet de suprimer un cour de la base de donnée
 function onDeleteCLassroom()
 {
     let classroom_Target = $('.delete-classroom-button-target').attr('id');
@@ -861,7 +886,7 @@ function onDeleteCLassroom()
 }
 
 
-//Fonction 14: Permet d'ajouter un classe dans le formulaire d'ajout du planning
+//Fonction 7: Permet d'ajouter un classe dans le formulaire d'ajout du planning
 $('#planning-new-class-form').on('submit', onAddClassPlanning);
 
 function onAddClassPlanning(event)
@@ -873,10 +898,17 @@ function onAddClassPlanning(event)
     database.ref('class/' +new_Class).set({class_Name: new_Class});
 }
 
+//Fonction de dropdown (partie planning)
+//Affichage du formulaire d'ajout d'un cours
+function dropDownFunctionCours() 
+{
+    document.getElementById("myDropdown-cours").classList.toggle("show-cours-form");
+}
 
 
 
-//Partie 5: Gestion router
+//PARTIE COMPLEMENTAIRE (mise en forme, router etc...)
+//Partie 1: Gestion router
 //Affichage tableau des élèves
 $('#classroom-section-title').click(function(){
     $('#classroom-section-title').css("height", "50px");
@@ -894,9 +926,7 @@ $('#planning-section-title').click(function(){
 })
 
 
-
-
-
+//Partie 2: Gestion effets css
 //Coloration bouton
 $('#btn-logout').mouseenter(function(){
     $('#btn-logout > a').css({

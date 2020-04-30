@@ -146,6 +146,57 @@ nav > div > h3 > svg{
     margin-right: 10%;
 }
 
+#planning-button-container
+{
+    display:flex;
+    justify-content: space-between;
+    margin-top: -8%;
+    margin-bottom: 5.5%;
+}
+
+#planning-button-container > button:nth-child(1)
+{
+    margin-left: 3%;
+}
+
+#planning-button-container > button:nth-child(2)
+{
+    margin-right: 3%;
+}
+
+#previous-date{
+    background-color: #F1F1F1;
+    width: auto;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+#previous-date:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
+
+#next-date{
+    background-color: #F1F1F1;
+    width: auto;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+#next-date:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
+
+
 table{
     width: 98%;
     margin: 2% auto 2% auto;

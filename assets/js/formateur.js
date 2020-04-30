@@ -19,28 +19,21 @@ const database = firebase.database();
 
 let token = localStorage.getItem('token');
 
+$('#profil-name').empty();
+let pseudo = localStorage.getItem('pseudo');
+$('#profil-name').text(pseudo);
 
-//Affichage du pseudo et récupération de la classe
-database.ref('user-connected/' +token).on('value', function(snapshot){
+let class_Selected = localStorage.getItem('class');
 
-    $('#profil-name').empty();
-
-    snapshot.forEach(function(item){
-        user = item.val();
-
-        $('#profil-name').text(user.pseudo);
-        localStorage.setItem('class', user.class);
-    })
-});
+console.log(class_Selected);
 
 
 
 
 //Partie 2: Gestion du tableau des élèves
-let class_Selected = localStorage.getItem('class');
-
 //Affichage du tableau des élèves
 database.ref('class/' +class_Selected+ '/student-list').on('value', function(snapshot) {
+    console.log(class_Selected);
     
     $('#student').empty();
 
@@ -79,7 +72,7 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
     //Gestionnaire d'évenement pour le systeme d'abscence et retard.
     //On ajoute un id au formulaire lors du click pour pouvoir le cibler en Jquery.
     setTimeout(() => {
-        showDate();
+        showPlanning();
 
         $('.report-form').click(function(){
             $(this).attr('id', 'report-form-target');
@@ -90,31 +83,7 @@ database.ref('class/' +class_Selected+ '/student-list').on('value', function(sna
 })
 
 
-/*Fonction 1: Permet d'inscrire les dates dans la select-bar du formulaire (ceci permet de signaler 
-les abscences ou retards uniquement sur les cours ayant étè défini au préalable)*/
-function showDate()
-{
-    database.ref('classroom/' +class_Selected).on('value', function(snapshot){
-
-        $('.date-select-bar').empty();
-    
-        let content = '';
-    
-        snapshot.forEach(function(item){
-    
-            const classroom = item.val();
-    
-            option_Value = classroom.date+ '-' +classroom.hour;
-    
-            content += `<option value=${option_Value}>${classroom.date}</option>`;
-        });
-    
-        $('.date-select-bar').append(content);
-    })
-}
-
-
-//Fonction 2: Permet d'enregistrer les abscences et retard d'un élève dans la base de données
+//Fonction 1: Permet d'enregistrer les abscences et retards d'un élève dans la base de données
 function onReportStudent(event)
 {
     event.preventDefault();
@@ -155,38 +124,322 @@ function onReportStudent(event)
 
 
 //Partie 3: Gestion du planning
-//Affichage des cours en fonction de la classe du formateur
-database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
+//Affichage du planning
+let day = 1;
+let month = 1;
+let year = 20;
 
-    $('.tab-cell-hour').css('background-color', '#f1f1f1');
-    $('.tab-cell-hour').empty()
+showPlanning();
 
-    snapshot.forEach(function(item){
+$('#previous-date').click(()=>previousDate());
 
-        const classroom = item.val();
+function previousDate()
+{
+    let day_Test = day;
+    let month_Test = month;
 
-        if(classroom.hour == "day")
+    if(day_Test > 7)
+            day_Test -= 7;
+
+    else
+    {
+        if(day_Test == 0)
+            day_Test = 1;
+
+        day_Test = 30 + (day_Test - 7);
+        month_Test--;
+    }
+
+    if(month_Test > 0)
+    {
+        if(day > 7)
+            day -= 7;
+
+        else
         {
-            $(`td[class*=${classroom.date}]`).css('background-color', '#e2e2e2');
-            $(`td[class*=${classroom.date}]`).append(`
-                <h4>${classroom.title}</h4>
-                <h4>${classroom.teacher}</h4>
-            `);
+            if(day == 0)
+                day = 1;
+
+            day = 30 + (day - 7);
+            month--;
+        }
+
+        showPlanning();
+    }
+}
+
+
+$('#next-date').click(()=>nextDate());
+
+function nextDate()
+{
+    let day_Test = day;
+    let month_Test = month;
+
+    if(day_Test <= 23)
+            day_Test += 7;
+
+    else
+    {
+        day_Test = 7 + (day_Test - 30);
+
+        if(day_Test == 0)
+            day_Test = 1;
+
+        month_Test++;
+    }
+
+    if(month_Test < 13)
+    {
+        if(day <= 23)
+            day += 7;
+
+        else
+        {
+            day = 7 + (day - 30);
+
+            if(day == 0)
+                day = 1;
+
+            month++;
+        }
+    
+        showPlanning();
+    }
+}
+
+
+//Fonction 11: Permet d'afficher le planning
+function showPlanning()
+{
+    $('#planning').empty();
+
+    let date_Target = [];
+
+    for(let i = 0; i < 7; i++)
+    {
+        if(day+i <= 30)
+        {
+            if(day+i < 10)
+                date_Target.push('0' +parseInt(day+i)+ '/0' +parseInt(month)+ '/' +parseInt(year));
+
+            else
+                date_Target.push(parseInt(day+i)+ '/0' +parseInt(month)+ '/' +parseInt(year));
         }
 
         else
         {
-            let table_Target = '.' +classroom.date+ '-' +classroom.hour;
-        
-            $(table_Target).css('background-color', '#e2e2e2');
-            $(table_Target).append(`
-                <h4>${classroom.title}</h4>
-                <h4>${classroom.teacher}</h4>
-            `);
+            date_Target.push('0' +parseInt(day + i - 30)+ '/0' +parseInt(month+1)+ '/' +parseInt(year));
         }
-    });
+    }
 
-})
+    let td_Morning_CLass = [];
+
+    for(let i = 0; i < 7; i++)
+    {
+        if(day+i <= 30)
+        {
+            if(day+i < 10)
+                td_Morning_CLass.push('0' +parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-morning');
+
+            else
+                td_Morning_CLass.push(parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-morning');
+        }
+
+        else
+        {
+            td_Morning_CLass.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month+1)+ '-' +parseInt(year)+ '-morning');
+        }
+    }
+
+    let td_Afternoon_Class = [];
+
+    for(let i = 0; i < 7; i++)
+    {
+        if(day+i <= 30)
+        {
+            if(day+i < 10)
+                td_Afternoon_Class.push('0' +parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-afternoon');
+
+            else
+                td_Afternoon_Class.push(parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-afternoon');
+        }
+
+        else
+        {
+            td_Afternoon_Class.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month+1)+ '-' +parseInt(year)+ '-afternoon');
+        }
+    }
+
+    let content = '';
+
+    content += `<thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>${date_Target[0]}</th>
+                        <th>${date_Target[1]}</th>
+                        <th>${date_Target[2]}</th>
+                        <th>${date_Target[3]}</th>
+                        <th>${date_Target[4]}</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>9H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>10H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>11H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>12H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>13H</td>
+                        <td class="${td_Morning_CLass[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Morning_CLass[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>14H</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>15H</td>
+                        <td class="${td_Afternoon_Class[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>16H</td>
+                        <td class="${td_Afternoon_Class[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                    <tr>
+                        <td>17H</td>
+                        <td class="${td_Afternoon_Class[0]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[1]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[2]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[3]} tab-cell-hour">&nbsp;</td>
+                        <td class="${td_Afternoon_Class[4]} tab-cell-hour">&nbsp;</td>
+                    </tr>
+
+                </tbody>`
+
+    $('#planning').append(content);
+
+    let date_Selected = [];
+
+    for(let i = 0; i < 7; i++)
+    {
+        if(day+i <= 30)
+        {
+            if(day+i < 10)
+                date_Selected.push('0' +parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year));
+
+            else
+                date_Selected.push(parseInt(day+i)+ '-0' +parseInt(month)+ '-' +parseInt(year));
+        }
+
+        else
+        {
+            date_Selected.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month)+ '-' +parseInt(year));
+        }
+    }
+
+    $('.date-select-bar').empty();
+    
+    content = `
+                <option value=${date_Selected[0]}>${date_Target[0]}</option>
+                <option value=${date_Selected[1]}>${date_Target[1]}</option>
+                <option value=${date_Selected[2]}>${date_Target[2]}</option>
+                <option value=${date_Selected[3]}>${date_Target[3]}</option>
+                <option value=${date_Selected[4]}>${date_Target[4]}</option>`
+
+    $('.date-select-bar').append(content);
+    
+    setTimeout(() => {
+            showCLassroom(class_Selected);
+        }, 500);
+}
+
+//Affichage des cours en fonction de la classe du formateur
+function showCLassroom(class_Selected)
+{
+    database.ref('classroom/' +class_Selected).on('value', function(snapshot) {
+
+        $('.tab-cell-hour').css('background-color', '#f1f1f1');
+        $('.tab-cell-hour').empty()
+
+        snapshot.forEach(function(item){
+
+            const classroom = item.val();
+
+            if(classroom.hour == "day")
+            {
+                $(`td[class*=${classroom.date}]`).css('background-color', '#e2e2e2');
+                $(`td[class*=${classroom.date}]`).append(`
+                    <h4>${classroom.title}</h4>
+                    <h4>${classroom.teacher}</h4>
+                `);
+            }
+
+            else
+            {
+                let table_Target = '.' +classroom.date+ '-' +classroom.hour;
+            
+                $(table_Target).css('background-color', '#e2e2e2');
+                $(table_Target).append(`
+                    <h4>${classroom.title}</h4>
+                    <h4>${classroom.teacher}</h4>
+                `);
+            }
+        });
+
+    })
+}
 
 
 
@@ -284,6 +537,7 @@ $('#btn-logout').click(function(){
     database.ref('user-connected/' +token).set(null);
     localStorage.setItem('token', '');
     localStorage.setItem('class', '');
+    localStorage.setItem('pseudo', '');
     self.location.href = 'index.html';
 })
 

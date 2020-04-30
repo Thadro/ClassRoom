@@ -352,38 +352,6 @@ td{
     margin-bottom: 10%;
 }
 
-#previous-date{
-    background-color: #F1F1F1;
-    width: auto;
-    color: #2d314e;
-    padding: 5px;
-    border: none;
-    outline: none;
-}
-
-#previous-date:hover{
-    background-color: #f1f1f1;
-    color: #eb2a5c;
-    transition-duration: 0.5s;
-    cursor: pointer; 
-}
-
-#next-date{
-    background-color: #F1F1F1;
-    width: auto;
-    color: #2d314e;
-    padding: 5px;
-    border: none;
-    outline: none;
-}
-
-#next-date:hover{
-    background-color: #f1f1f1;
-    color: #eb2a5c;
-    transition-duration: 0.5s;
-    cursor: pointer; 
-}
-
 
 /* Partie 3: Section de bas de page: (Formulaire choix de classe et ajout d'utilisateur) */
 #bottom-section
@@ -867,6 +835,38 @@ h4[id*="error-title"]
 #planning-button-container > button:nth-child(2)
 {
     margin-right: 3%;
+}
+
+#previous-date{
+    background-color: #F1F1F1;
+    width: auto;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+#previous-date:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
+
+#next-date{
+    background-color: #F1F1F1;
+    width: auto;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+#next-date:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
 }
 
 #planning-bottom-section

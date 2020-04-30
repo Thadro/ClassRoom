@@ -17,19 +17,9 @@ const database = firebase.database();
 
 let token = localStorage.getItem('token');
 
-//Affichage du pseudo et récupération de la classe
-database.ref('user-connected/' +token).on('value', function(snapshot){
-
-    $('#profil-name').empty();
-
-    snapshot.forEach(function(item){
-        user = item.val();
-
-        $('#profil-name').text(user.pseudo);
-        localStorage.setItem('class', user.class);
-        localStorage.setItem('id', user.user_Id);
-    })
-});
+$('#profil-name').empty();
+let pseudo = localStorage.getItem('pseudo');
+$('#profil-name').text(pseudo);
 
 let class_Selected = localStorage.getItem('class');
 let student_Id = localStorage.getItem('id');
@@ -54,8 +44,8 @@ function previousDate()
 
     else
     {
-        if(day_Test == 1)
-            day_Test = 0;
+        if(day_Test == 0)
+            day_Test = 1;
 
         day_Test = 30 + (day_Test - 7);
         month_Test--;
@@ -68,8 +58,8 @@ function previousDate()
 
         else
         {
-            if(day == 1)
-                day = 0;
+            if(day == 0)
+                day = 1;
 
             day = 30 + (day - 7);
             month--;
@@ -87,7 +77,7 @@ function nextDate()
     let day_Test = day;
     let month_Test = month;
 
-    if(day_Test < 23)
+    if(day_Test <= 23)
             day_Test += 7;
 
     else
@@ -102,7 +92,7 @@ function nextDate()
 
     if(month_Test < 13)
     {
-        if(day < 23)
+        if(day <= 23)
             day += 7;
 
         else
@@ -140,7 +130,7 @@ function showPlanning()
 
         else
         {
-            date_Target.push('0' +parseInt(day + i - 30)+ '/0' +parseInt(month)+ '/' +parseInt(year));
+            date_Target.push('0' +parseInt(day + i - 30)+ '/0' +parseInt(month+1)+ '/' +parseInt(year));
         }
     }
 
@@ -159,7 +149,7 @@ function showPlanning()
 
         else
         {
-            td_Morning_CLass.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-morning');
+            td_Morning_CLass.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month+1)+ '-' +parseInt(year)+ '-morning');
         }
     }
 
@@ -178,7 +168,7 @@ function showPlanning()
 
         else
         {
-            td_Afternoon_Class.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month)+ '-' +parseInt(year)+ '-afternoon');
+            td_Afternoon_Class.push('0' +parseInt(day + i - 30)+ '-0' +parseInt(month+1)+ '-' +parseInt(year)+ '-afternoon');
         }
     }
 
@@ -284,7 +274,6 @@ function showPlanning()
     setTimeout(() => {
             showCLassroom(class_Selected);
         }, 500);
-
 }
 
 
@@ -395,6 +384,8 @@ $('#btn-logout').click(function(){
     database.ref('user-connected/' +token).set(null);
     localStorage.setItem('token', '');
     localStorage.setItem('class', '');
+    localStorage.setItem('pseudo', '');
+    localStorage.setItem('id', '');
     self.location.href = 'index.html';
 })
 

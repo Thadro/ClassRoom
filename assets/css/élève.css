@@ -167,6 +167,39 @@ nav > div > h3 > svg{
     margin-right: 3%;
 }
 
+#previous-date{
+    background-color: #F1F1F1;
+    width: auto;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+#previous-date:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
+
+#next-date{
+    background-color: #F1F1F1;
+    width: auto;
+    color: #2d314e;
+    padding: 5px;
+    border: none;
+    outline: none;
+}
+
+#next-date:hover{
+    background-color: #f1f1f1;
+    color: #eb2a5c;
+    transition-duration: 0.5s;
+    cursor: pointer; 
+}
+
+
 table{
     width: 98%;
     margin: 2% auto 2% auto;
