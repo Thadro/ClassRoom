@@ -151,7 +151,7 @@ nav > div > h3 > svg{
     display:flex;
     justify-content: space-between;
     margin-top: -8%;
-    margin-bottom: 5.5%;
+    margin-bottom: 126px;
 }
 
 #planning-button-container > button:nth-child(1)
